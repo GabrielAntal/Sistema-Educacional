@@ -1,1 +1,80 @@
 
+-- Table ALUNO
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ALUNO (
+  cod_aluno SERIAL PRIMARY KEY,
+  nome_aluno CHARACTER VARYING(70) NOT NULL,
+  sobrenome CHARACTER VARYING (70) NOT NULL,
+  rg_aluno CHARACTER VARYING(9) NOT NULL,
+  data_nasc DATE,
+  nota_aluno DECIMAL(2,1) NOT NULL,
+  falta_aluno INT NOT NULL,
+  fk_cod_disc SERIAL)
+
+
+-- -----------------------------------------------------
+-- Table PROFISSIONAL
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS PROFISSIONAL (
+  cod_prof SERIAL PRIMARY KEY,
+  nome_prof CHARACTER VARYING(45) NOT NULL,
+  email_prof CHARACTER VARYING(30) NOT NULL,
+  senha CHARACTER VARYING(10) NOT NULL,
+  tipo_usu ENUM('P', 'D', 'S') NOT NULL,
+  cpf CHARACTER VARYING(11) NOT NULL,
+  fk_cod_disc SERIAL)
+
+
+-- -----------------------------------------------------
+-- Table PERIODO
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS PERIODO (
+  cod_per SERIAL PRIMARY KEY,
+  descricao_per CHARACTER VARYING(10) NOT NULL)
+
+
+-- -----------------------------------------------------
+-- Table BLOCO
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS BLOCO (
+  cod_blo SERIAL PRIMARY KEY,
+  descricao_blo CHARACTER VARYING(1) NOT NULL);
+
+
+-- -----------------------------------------------------
+-- Table DISCIPLINA
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS DISCIPLINA (
+  cod_disc SERIAL PRIMARY KEY,
+  nome_disc CHARACTER VARYING(45),
+  fk_cod_sala serial,
+  fk_cod_prof serial,
+  fk_cod_per serial);
+
+
+-- -----------------------------------------------------
+-- Table SALA
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS SALA (
+  cod_sala SERIAL PRIMARY KEY,
+  descricao_sala CHARACTER VARYING(5) NOT NULL,
+  fk_cod_blo SERIAL,
+  fk_cod_aluno SERIAL);
+
+ALTER TABLE SALA ADD CONSTRAINT FOREIGN KEY (fk_cod_blo) REFERENCES BLOCO (cod_blo);
+ALTER TABLE SALA ADD CONSTRAINT FOREIGN KEY (fk_cod_aluno) REFERENCES ALUNO (cod_aluno);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_sala) REFERENCES SALA (cod_sala);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_prof) REFERENCES PROFISSIONAL(cod_prof);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_per) REFERENCES PERIODO (cod_per); 
+ALTER TABLE PROFISSIONAL ADD CONSTRAINT FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
+ALTER TABLE ALUNO ADD CONSTRAINT FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
+
+INSERT INTO PROFISSIONAL VALUES (1, 'user', 'master', 'admin', 'admin', 'D', '', '');
+
+
+
+
+
+
+
+
