@@ -1,4 +1,3 @@
-
 -- Table ALUNO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ALUNO (
@@ -8,29 +7,29 @@ CREATE TABLE IF NOT EXISTS ALUNO (
   rg_aluno CHARACTER VARYING(9) NOT NULL,
   data_nasc DATE,
   nota_aluno DECIMAL(2,1) NOT NULL,
-  falta_aluno INT NOT NULL,
-  fk_cod_disc SERIAL)
-
+  falta_aluno INT NOT NULL);
+  fk_cod_disc SERIAL);
 
 -- -----------------------------------------------------
 -- Table PROFISSIONAL
 -- -----------------------------------------------------
+
+--create type tipo_usuario as ENUM ('P','D','S');
 CREATE TABLE IF NOT EXISTS PROFISSIONAL (
   cod_prof SERIAL PRIMARY KEY,
-  nome_prof CHARACTER VARYING(45) NOT NULL,
-  email_prof CHARACTER VARYING(30) NOT NULL,
-  senha CHARACTER VARYING(10) NOT NULL,
-  tipo_usu ENUM('P', 'D', 'S') NOT NULL,
-  cpf CHARACTER VARYING(11) NOT NULL,
-  fk_cod_disc SERIAL)
-
+  nome_prof CHARACTER VARYING(150) NOT NULL,
+  email_prof CHARACTER VARYING(150) NOT NULL,
+  senha CHARACTER VARYING(45) NOT NULL,
+  tipo_usu tipo_usuario NOT NULL,
+  cpf CHARACTER VARYING(11) NOT NULL);
+  fk_cod_disc SERIAL);
 
 -- -----------------------------------------------------
 -- Table PERIODO
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS PERIODO (
   cod_per SERIAL PRIMARY KEY,
-  descricao_per CHARACTER VARYING(10) NOT NULL)
+  descricao_per CHARACTER VARYING(10) NOT NULL);
 
 
 -- -----------------------------------------------------
@@ -61,20 +60,14 @@ CREATE TABLE IF NOT EXISTS SALA (
   fk_cod_blo SERIAL,
   fk_cod_aluno SERIAL);
 
-ALTER TABLE SALA ADD CONSTRAINT FOREIGN KEY (fk_cod_blo) REFERENCES BLOCO (cod_blo);
-ALTER TABLE SALA ADD CONSTRAINT FOREIGN KEY (fk_cod_aluno) REFERENCES ALUNO (cod_aluno);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_sala) REFERENCES SALA (cod_sala);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_prof) REFERENCES PROFISSIONAL(cod_prof);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT FOREIGN KEY (fk_cod_per) REFERENCES PERIODO (cod_per); 
-ALTER TABLE PROFISSIONAL ADD CONSTRAINT FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
-ALTER TABLE ALUNO ADD CONSTRAINT FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
+ALTER TABLE SALA ADD CONSTRAINT cod_blo_fk FOREIGN KEY (fk_cod_blo) REFERENCES BLOCO (cod_blo);
+ALTER TABLE SALA ADD CONSTRAINT cod_aluno_fk FOREIGN KEY (fk_cod_aluno) REFERENCES ALUNO (cod_aluno);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_sala_fk FOREIGN KEY (fk_cod_sala) REFERENCES SALA (cod_sala);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_prof_fk FOREIGN KEY (fk_cod_prof) REFERENCES PROFISSIONAL(cod_prof);
+ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_per_fk FOREIGN KEY (fk_cod_per) REFERENCES PERIODO (cod_per); 
+ALTER TABLE PROFISSIONAL ADD CONSTRAINT cod_disc_fk FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
+ALTER TABLE ALUNO ADD CONSTRAINT cod_disc_fk FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
 
-INSERT INTO PROFISSIONAL VALUES (1, 'user', 'master', 'admin', 'admin', 'D', '', '');
-
-
-
-
-
-
-
-
+INSERT INTO PROFISSIONAL VALUES (1, 'Diretor', 'admin@gmail.com', 'admin', 'D', '');
+insert into profissional (cod_prof, nome_prof,email_prof, senha, tipo_usu,
+						cpf) VALUES(1,'diretor','admin@gmail.com','admin','D','');
