@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS BLOCO (
 CREATE TABLE IF NOT EXISTS DISCIPLINA (
   cod_disc SERIAL PRIMARY KEY,
   nome_disc CHARACTER VARYING(45),
+  turma CHARACTER (1),
   fk_cod_sala serial,
   fk_cod_prof serial,
   fk_cod_per serial);
