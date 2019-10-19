@@ -1,74 +1,200 @@
--- Table ALUNO
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS ALUNO (
-  cod_aluno SERIAL PRIMARY KEY,
-  nome_aluno CHARACTER VARYING(70) NOT NULL,
-  sobrenome CHARACTER VARYING (70) NOT NULL,
-  rg_aluno CHARACTER VARYING(9) NOT NULL,
-  data_nasc DATE,
-  nota_aluno DECIMAL(2,1) NOT NULL,
-  falta_aluno INT NOT NULL);
-  fk_cod_disc SERIAL);
-
--- -----------------------------------------------------
--- Table PROFISSIONAL
--- -----------------------------------------------------
-
---create type tipo_usuario as ENUM ('P','D','S');
-CREATE TABLE IF NOT EXISTS PROFISSIONAL (
-  cod_prof SERIAL PRIMARY KEY,
-  nome_prof CHARACTER VARYING(150) NOT NULL,
-  email_prof CHARACTER VARYING(150) NOT NULL,
-  senha CHARACTER VARYING(45) NOT NULL,
-  tipo_usu tipo_usuario NOT NULL,
-  cpf CHARACTER VARYING(11) NOT NULL);
-  fk_cod_disc SERIAL);
-
--- -----------------------------------------------------
--- Table PERIODO
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS PERIODO (
-  cod_per SERIAL PRIMARY KEY,
-  descricao_per CHARACTER VARYING(10) NOT NULL);
+package Model;
 
 
--- -----------------------------------------------------
--- Table BLOCO
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS BLOCO (
-  cod_blo SERIAL PRIMARY KEY,
-  descricao_blo CHARACTER VARYING(1) NOT NULL);
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 
--- -----------------------------------------------------
--- Table DISCIPLINA
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS DISCIPLINA (
-  cod_disc SERIAL PRIMARY KEY,
-  nome_disc CHARACTER VARYING(45),
-  turma CHARACTER (1),
-  fk_cod_sala serial,
-  fk_cod_prof serial,
-  fk_cod_per serial);
 
 
--- -----------------------------------------------------
--- Table SALA
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS SALA (
-  cod_sala SERIAL PRIMARY KEY,
-  descricao_sala CHARACTER VARYING(5) NOT NULL,
-  fk_cod_blo SERIAL,
-  fk_cod_aluno SERIAL);
 
-ALTER TABLE SALA ADD CONSTRAINT cod_blo_fk FOREIGN KEY (fk_cod_blo) REFERENCES BLOCO (cod_blo);
-ALTER TABLE SALA ADD CONSTRAINT cod_aluno_fk FOREIGN KEY (fk_cod_aluno) REFERENCES ALUNO (cod_aluno);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_sala_fk FOREIGN KEY (fk_cod_sala) REFERENCES SALA (cod_sala);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_prof_fk FOREIGN KEY (fk_cod_prof) REFERENCES PROFISSIONAL(cod_prof);
-ALTER TABLE DISCIPLINA ADD CONSTRAINT cod_per_fk FOREIGN KEY (fk_cod_per) REFERENCES PERIODO (cod_per); 
-ALTER TABLE PROFISSIONAL ADD CONSTRAINT cod_disc_fk FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
-ALTER TABLE ALUNO ADD CONSTRAINT cod_disc_fk FOREIGN KEY (fk_cod_disc) REFERENCES DISCIPLINA (cod_disc);  
+public class Conexao_bd {
+    public  String url = "jdbc:postgresql://localhost:5432/Escola";
+    public String usuario = "postgres";
+    public  String senha = "root";
+    
+    
+    
+    
+    private  Connection conexao = null;
+    private  Statement stmt = null;
+    
+    public  boolean conecta (){
+        try {
+            conexao = DriverManager.getConnection(url, usuario, senha);
+             JOptionPane.showMessageDialog(null, "conexao com sucesso");
+            return true;
+        }
+            catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "nao deu certo a conexao");
+                return false;
+            }
+    }
+   
+    public  boolean tabela_creates(){
+        try {
+            conexao = DriverManager.getConnection(url, usuario, senha);
+            stmt = conexao.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS ALUNO ("+ 
+                    "cod_aluno serial,  "+
+                    "nome_aluno varchar NOT NULL, "+
+                    "sobrenome varchar NOT NULL, "+
+                    "rg_aluno varchar NOT NULL, "+
+                    "data_nasc DATE, "+
+                    "resultado varchar, "+  
+                    "falta_aluno integer NOT NULL, "+
+                    "CONSTRAINT COD_ALUNO PRIMARY KEY (cod_aluno) "+
+                    ");"+
 
-INSERT INTO PROFISSIONAL VALUES (1, 'Diretor', 'admin@gmail.com', 'admin', 'D', '');
-insert into profissional (cod_prof, nome_prof,email_prof, senha, tipo_usu,
-						cpf) VALUES(1,'diretor','admin@gmail.com','admin','D','');
+                    "CREATE TABLE IF NOT EXISTS PER_ALUNO("+
+                    "cod_per serial,"+
+                    "cod_aluno serial,"+
+                    ");"+
+
+
+                    " create type tipo_periodo as ENUM ('B','T','S');"+ 
+                    "CREATE TABLE IF NOT EXISTS PERIODO("+
+                    "cod_per serial primary key,"+
+                    "nota_aluno decimal(2,1) NOT NULL,"+
+                    "tipo_per tipo_periodo NOT NULL,"+
+                    "ordinal_per int(1) NOT NULL"+
+                    ");"+
+
+
+                    "CREATE TABLE IF NOT EXISTS PER_DISC("+
+                    "cod_per serial NOT NULL,"+
+                    "cod_disc  serial NOT NULL);"+
+
+
+                    "create type tipo_usuario as ENUM ('P','D','S');"+   
+                    "CREATE TABLE IF NOT EXISTS PROFISSIONAL ("+
+                    " cod_prof SERIAL, "+
+                    " nome_prof varchar NOT NULL, "+
+                    " email_prof varchar NOT NULL, "+
+                    " senha varchar NOT NULL, "+
+                    " tipo_usu tipo_usuario NOT NULL, "+
+                    " cpf varchar(11) NOT NULL, "+       
+                    " CONSTRAINT cod_prof PRIMARY KEY (cod_prof) "+
+                    ");"+ 
+
+                    "CREATE TABLE IF NOT EXISTS PROF_DISC("+
+                    "cod_prof serial NOT NULL,"+
+                    "cod_disc serial NOT NULL"+
+                    ");"+
+
+
+                    "CREATE TYPE turn AS ENUM ('M','V','N');"+
+                    " CREATE TABLE IF NOT EXISTS TURNO ("+
+                    " cod_turno SERIAL PRIMARY KEY, "+
+                    " descricao_turno turno NOT NULL "+
+                    ");"+
+
+
+                    "CREATE TABLE IF NOT EXISTS TUR_DISC("+
+                    "cod_disc serial NOT NULL"+
+                    "cod_tur serial NOT NULL"+
+                    ");"+
+
+
+                    " CREATE TABLE IF NOT EXISTS BLOCO ("+
+                    " cod_blo SERIAL, "+
+                    "descricao_blo varchar NOT NULL, "+
+                    " CONSTRAINT COD_BLO PRIMARY KEY(cod_blo) "+
+                    ");"+
+
+
+
+                    " CREATE TABLE IF NOT EXISTS SALA ("+
+                    " cod_sala SERIAL, "+
+                    " cod_bloc serial NOT NULL, "+         
+                    " descricao_sala varchar NOT NULL, "+
+                    " CONSTRAINT cod_sala PRIMARY KEY(cod_sala) "+
+                    ");"+	
+
+                    "CREATE TABLE IF NOT EXISTS SALA_DISC("+
+                    "cod_sala serial NOT NULL,"+
+                    "cod_disc serial NOT NULL"+
+                    ");"+
+
+
+                    " CREATE TABLE IF NOT EXISTS DISCIPLINA ("+
+                    " cod_disc SERIAL, "+
+                    " nome_disc varchar, "+
+                    " CONSTRAINT cod_disc PRIMARY KEY (cod_disc) "+
+                    ");";
+
+            stmt.executeUpdate(sql);
+             JOptionPane.showMessageDialog(null, "deu certo ao criar tabela");
+            stmt.close();
+            conexao.close();
+            return true;
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "nao deu certo ao criar tabela");
+            return false;
+        }
+        
+    }
+    
+    
+    
+    public  boolean modify(){
+          try {
+            conexao = DriverManager.getConnection(url, usuario, senha);
+            stmt = conexao.createStatement();
+            
+            String sql = 
+                           
+               "ALTER TABLE SALA ADD CONSTRAINT cod_bloco_fk\n" +
+            "FOREIGN KEY (cod_bloc)\n" +
+             "REFERENCES bloco (COD_BLO);\n" +
+			 
+			 "ALTER TABLE PER_ALUNO ADD foreign key (cod_aluno)references"+
+			 "ALUNO(cod_aluno); "+
+			 
+			 "ALTER TABLE PER_ALUNO ADD foreign key (cod_per) references"+
+			 "PERIODO(cod_per); "+
+			 
+			 "ALTER TABLE PROF_DISC ADD foreign key (cod_prof) references"+
+			 "PROFISSIONAL(cod_prof);"+
+			 
+			 "ALTER TABLE PROF_DISC ADD foreign key (cod_disc) references"+
+			 "DISCIPLINA(cod_disc);"+
+			 
+			 "ALTER TABLE TUR_DISC ADD foreign key (cod_disc) references"+
+			 "DISCIPLINA(cod_disc);"+
+			 
+			 "ALTER TABLE TUR_DISC ADD foreign key (cod_tur) references"+
+			 "TURNO(cod_tur);"+
+			 
+			 "ALTER TABLE SALA_DISC ADD foreign key (cod_sala) references"+
+			 "SALA(cod_sala);"+
+			 
+			 "ALTER TABLE SALA_DISC ADD foreign key (cod_disc) references"+
+			 "DISCIPLINA(cod_sala);"
+            +"insert into profissional (cod_prof, nome_prof,email_prof, senha,tipo_usu,cpf) VALUES(1,'diretor','admin@gmail.com','admin','D','');";
+        
+        stmt.executeUpdate(sql);
+            stmt.close();
+            conexao.close();
+            return true;
+        } catch (SQLException e) {
+              JOptionPane.showMessageDialog(null, "nao deu certo no modify");
+            return false;
+        }
+
+
+    
+    }
+    
+    
+    
+    
+}
+
+
+
+
+
