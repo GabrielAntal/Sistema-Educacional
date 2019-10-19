@@ -118,6 +118,18 @@ public class Conexao_bd {
                     "cod_sala serial NOT NULL,"+
                     "cod_disc serial NOT NULL"+
                     ");"+
+                    
+                    
+                    "CREATE TABLE IF NOT EXISTS TURMA("+
+                    "cod_turma serial primary key,"+
+                    "turma_descricao varchar"+
+                    ");"+
+                    
+                    
+                    "CREATE TABLE IF NOT EXISTS TURMA_DISC"+
+                    "cod_turma serial NOT NULL,"+
+                    "cod_disc serial NOT NULL"+
+                    ");"+
 
 
                     " CREATE TABLE IF NOT EXISTS DISCIPLINA ("+
@@ -173,7 +185,14 @@ public class Conexao_bd {
 			 "SALA(cod_sala);"+
 			 
 			 "ALTER TABLE SALA_DISC ADD foreign key (cod_disc) references"+
-			 "DISCIPLINA(cod_sala);"
+			 "DISCIPLINA(cod_disc);"+
+                    
+                         "ALTER TABLE TURMA_DISC ADD foreign key (cod_turma) references"+
+                         "TURMA(cod_turma)"+
+                    
+                        "ALTER TABLE TURMA_DISC ADD foreign key (cod_disc) references"+
+                         "DISCIPLINA(cod_disc)"
+                    
             +"insert into profissional (cod_prof, nome_prof,email_prof, senha,tipo_usu,cpf) VALUES(1,'diretor','admin@gmail.com','admin','D','');";
         
         stmt.executeUpdate(sql);
