@@ -34,7 +34,10 @@ CREATE TABLE if not exists ALUNO (
                     create table if not exists PROFISSIONAL (
                     cod_prof SERIAL,
                     nome_prof varchar not NULL,
-                    cpf varchar (11) Not NULl,       
+                    cpf varchar (11) Not NULl,
+		    login character varying (20),
+		    senha character varying (20),
+		    perfil character varying (15),
                     CONSTRAINT cod_prof PRIMARY KEY (cod_prof)
                     );
 
