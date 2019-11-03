@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.AlunoDao;
 import java.sql.Date;
 import javax.swing.JTextField;
 
@@ -14,28 +15,41 @@ import javax.swing.JTextField;
  */
 public class AlunosModel {
    
-  
+ 
     private String nome;
     private String sobrenome;
     private String rg;
-    
-    
-    
-    public AlunosModel( String nome, String sobrenome, String rg) {
+   private String Data;
+
+    public AlunosModel( String nome, String sobrenome, String rg, String Data) {
       
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.rg = rg;
+         this.Data=Data;
+        
     }
+
+ 
 
     public AlunosModel() {
      
     }
 
-    public AlunosModel(JTextField nome, JTextField sobrenome, JTextField rg) {
-     
+    public String getData() {
+        return Data;
     }
 
+    public void setData(String Data) {
+        this.Data = Data;
+    }
+
+    
+
+ 
+
+  
+   
     public String getNome() {
         return nome;
     }
@@ -60,9 +74,8 @@ public class AlunosModel {
         this.rg = rg;
     }
    
+  public void salvar(AlunosModel aluno){
     
-
-
-
+  }
  
 }
