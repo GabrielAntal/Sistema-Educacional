@@ -20,6 +20,7 @@ import static java.lang.System.in;
 import static java.lang.System.out;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -48,11 +50,44 @@ public class Alunos extends javax.swing.JFrame {
     
         initComponents();
         setLocationRelativeTo(null);
-            
+    
     }
+    
 
   
-    
+    public void CarregarTabela(String al){
+      try{
+        //AlunosModel b = new AlunosModel();
+         AlunoDao a = new AlunoDao();
+        
+         DefaultTableModel modelo = (DefaultTableModel)   this.jTable2.getModel();
+         
+         modelo.setNumRows(0);
+         jTable2.getColumnModel().getColumn(0).setPreferredWidth(80);
+           jTable2.getColumnModel().getColumn(1).setPreferredWidth(30);
+          jTable2.getColumnModel().getColumn(2);
+           jTable2.getColumnModel().getColumn(3);
+           
+        
+      
+           
+           for( AlunosModel r : a.Listar(al)){
+               modelo.addRow(new Object[]{
+                
+                   r.getRg(),
+                   r.getNome(),
+                   r.getSobrenome(),
+                   r.getData()
+               });
+           }
+           
+               
+               //modelo.addRow(a.selecionaAluno(al));
+       } catch (Exception ex) {
+           Logger.getLogger(Alunos.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+    }
     
      public void limparCampos(){
          rg1.setText("");
@@ -91,7 +126,7 @@ public class Alunos extends javax.swing.JFrame {
          String sobrenome2 = sobrenome1.getText();
          String dataa=data1.getText();
          
-         if(nome.length()>0&&rg.length()>7&&sobrenome2.length()>0)
+         if(nome.length()>0&&rg.length()>7&&sobrenome2.length()>0&&dataa.length()>0)
          jTable1.setValueAt(rg, linha, 0);
            jTable1.setValueAt(nome, linha, 1);
            jTable1.setValueAt(sobrenome2, linha, 2);
@@ -117,7 +152,6 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
@@ -133,6 +167,7 @@ public class Alunos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         rg1 = new javax.swing.JFormattedTextField();
         data1 = new javax.swing.JFormattedTextField();
+        jButton3 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         nome1 = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
@@ -263,6 +298,11 @@ public class Alunos extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jSeparator12 = new javax.swing.JSeparator();
         jButton15 = new javax.swing.JButton();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -281,15 +321,6 @@ public class Alunos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("RG");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 35, 30, 20));
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/save_all.png"))); // NOI18N
-        jButton3.setText("Salvar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 457, 105, 30));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, 848, -1));
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -402,7 +433,17 @@ public class Alunos extends javax.swing.JFrame {
         jPanel10.add(data1);
         data1.setBounds(530, 30, 150, 30);
 
-        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 500));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/save_all.png"))); // NOI18N
+        jButton3.setText("Salvar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButton3);
+        jButton3.setBounds(70, 450, 105, 30);
+
+        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 510));
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C" }));
@@ -1047,6 +1088,63 @@ public class Alunos extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Medias e Frequências", jPanel9);
 
+        jPanel15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanel15KeyReleased(evt);
+            }
+        });
+        jPanel15.setLayout(null);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Aluno");
+        jPanel15.add(jLabel3);
+        jLabel3.setBounds(10, 30, 70, 40);
+
+        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "RG", "Nome", "Sobrenome", "Data Nasc"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jPanel15.add(jScrollPane2);
+        jScrollPane2.setBounds(70, 120, 640, 280);
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+        jPanel15.add(jTextField1);
+        jTextField1.setBounds(80, 40, 200, 30);
+
+        jTabbedPane1.addTab("Consultar alunos", jPanel15);
+
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/remover.png"))); // NOI18N
         jButton4.setText("Cancelar");
 
@@ -1180,6 +1278,14 @@ public class Alunos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField58ActionPerformed
 
+    private void jPanel15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel15KeyReleased
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel15KeyReleased
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+          CarregarTabela(jTextField1.getText());// TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1261,6 +1367,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1282,6 +1389,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1291,6 +1399,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -1309,8 +1418,10 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
