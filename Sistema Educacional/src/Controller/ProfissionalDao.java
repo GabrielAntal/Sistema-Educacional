@@ -5,6 +5,7 @@ import Model.Conexao_bd;
 import Model.ProfessorModel;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -17,7 +18,7 @@ public class ProfissionalDao {
     
     Conexao_bd c = new Conexao_bd();
     
-    
+    private ProfessorModel profissional;
     
     
     public void Inserir_Profissional (ProfessorModel prof ){
@@ -40,15 +41,26 @@ public class ProfissionalDao {
          
     } 
         
-        public void mostrar_prof(String nomeProf){
+        public ArrayList<ProfessorModel> mostrar_prof(String nomeProf){
             c.conecta();
-            
+            ArrayList<ProfessorModel> list = new ArrayList<>();
             try {
-                PreparedStatement pst = c.conexao.prepareStatement("Select nome, cpf, login, senha, perfil from Profissional where nome_prof like ? and perfil like 'Professor%'");
+                PreparedStatement pst = c.conexao.prepareStatement("Select nome_prof, cpf, login, senha, perfil from Profissional where nome_prof like ? and perfil like 'Professor%'");
                 pst.setString(1, "'%"+nomeProf+"%'");
                 pst.executeQuery();
+                
+                while(c.rs.next()){
+                    profissional.setNome(c.rs.getString("nome_aluno"));
+                    profissional.setCpf(c.rs.getString("cpf"));
+                    profissional.setLogin(c.rs.getString("login"));
+                    profissional.setSenha(c.rs.getString("senha"));
+                    profissional.setPerfil(c.rs.getString("perfil"));
+                    list.add(profissional);
+                }
+                return list;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Verificar procura_prof "+e);
+                return null;
             }
             
         }
