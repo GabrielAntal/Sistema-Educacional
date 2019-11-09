@@ -66,11 +66,11 @@ public class AlunoDao extends Conexao_bd  {
 
         public ArrayList<AlunosModel> Listar(String nome){ 
             
-            ArrayList<AlunosModel> listaa= new ArrayList<>();
+            ArrayList<AlunosModel> listaa1= new ArrayList<>();
             conecta();
 
             try {
-                pst = conexao.prepareStatement("select rg_aluno, nome_aluno, sobrenome, data_nasc from aluno where nome_aluno ilike'"+nome+ "%'");
+                pst = conexao.prepareStatement("select* from aluno where nome_aluno ilike'"+nome+ "%'");
                 rs =pst.executeQuery();
                 while(rs.next()){
 
@@ -80,7 +80,7 @@ public class AlunoDao extends Conexao_bd  {
                     a.setSobrenome(rs.getString("sobrenome")); 
                     a.setData(rs.getString("data_nasc"));
 
-                    listaa.add(a);
+                    listaa1.add(a);
 
                     
                 }
@@ -93,10 +93,47 @@ public class AlunoDao extends Conexao_bd  {
 
           
            
-            return listaa;
+            return listaa1;
             
      }
 
+     
+        public ArrayList<AlunosModel> ListarRG(String rg){ 
+            
+            ArrayList<AlunosModel> listaa= new ArrayList<>();
+            conecta();
+   
+            try {
+                pst = conexao.prepareStatement("select* from aluno where rg_aluno='"+rg+ "'");
+                rs =pst.executeQuery();
+                
+             
+                while(rs.next()){
+
+                    AlunosModel a = new AlunosModel();
+                    a.setNome(rs.getString("nome_aluno"));
+                    a.setRg(rs.getString("rg_aluno")); 
+                    a.setSobrenome(rs.getString("sobrenome")); 
+                    a.setData(rs.getString("data_nasc"));
+                
+               listaa.add(a);
+                }
+                
+                
+
+
+            } catch (SQLException ex) {
+               JOptionPane.showMessageDialog(null,"erro no dao" +ex);
+            }
+ 
+       
+                     return listaa;
+                 
+                
+          
+            
+     }
+     
 
 
     }
