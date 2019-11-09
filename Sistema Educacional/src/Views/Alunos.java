@@ -31,6 +31,8 @@ import java.util.Calendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -50,12 +52,13 @@ public class Alunos extends javax.swing.JFrame {
     
         initComponents();
         setLocationRelativeTo(null);
+        
     
     }
-    
+     AlunoDao b = new AlunoDao();
 
   
-    public void CarregarTabela(String al){
+    public void CarregarTabela(String aluno){
       try{
         //AlunosModel b = new AlunosModel();
          AlunoDao a = new AlunoDao();
@@ -63,15 +66,15 @@ public class Alunos extends javax.swing.JFrame {
          DefaultTableModel modelo = (DefaultTableModel)   this.jTable2.getModel();
          
          modelo.setNumRows(0);
-         jTable2.getColumnModel().getColumn(0).setPreferredWidth(80);
-           jTable2.getColumnModel().getColumn(1).setPreferredWidth(30);
+         jTable2.getColumnModel().getColumn(0);
+           jTable2.getColumnModel().getColumn(1);
           jTable2.getColumnModel().getColumn(2);
            jTable2.getColumnModel().getColumn(3);
            
         
       
            
-           for( AlunosModel r : a.Listar(al)){
+           for( AlunosModel r : a.Listar(aluno)){
                modelo.addRow(new Object[]{
                 
                    r.getRg(),
@@ -90,7 +93,7 @@ public class Alunos extends javax.swing.JFrame {
     }
     
      public void limparCampos(){
-         rg1.setText("");
+         
          rg1.setText("");
          nome2.setText("");
          sobrenome1.setText("");
@@ -103,18 +106,14 @@ public class Alunos extends javax.swing.JFrame {
 
          String nome = nome2.getText();
          String rg = rg1.getText();
-         String sobrenome2 = sobrenome1.getText();
+         String sobrenome2 = sobrenome1.getText().trim();
          String dataa =data1.getText();
-           //String dia = data.getText().substring(0,2);
-         // String mes = data.getText().substring(3,5);
-         //  String ano = data.getText().substring(6); 
-          // String dataa = dia+"/"+mes+"/"+ano;
-      
-      
+         
+        
         ControlAluno c = new ControlAluno();
        
         c.AlunoControl(nome, sobrenome2, rg,dataa);
-       
+       jButton3.setEnabled(true);
        
    }
     
@@ -124,7 +123,7 @@ public class Alunos extends javax.swing.JFrame {
          String nome = nome2.getText();
          String rg = rg1.getText();
          String sobrenome2 = sobrenome1.getText();
-         String dataa=data1.getText();
+         String dataa=data1.getText().trim();
          
          if(nome.length()>0&&rg.length()>7&&sobrenome2.length()>0&&dataa.length()>0)
          jTable1.setValueAt(rg, linha, 0);
@@ -137,6 +136,9 @@ public class Alunos extends javax.swing.JFrame {
     }
     
     
+    
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,49 +175,51 @@ public class Alunos extends javax.swing.JFrame {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField56 = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        jTextField57 = new javax.swing.JTextField();
-        jLabel39 = new javax.swing.JLabel();
-        jTextField58 = new javax.swing.JTextField();
-        jLabel40 = new javax.swing.JLabel();
-        jTextField59 = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
+        sobrenomedisc = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        saladisc = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        periododisc = new javax.swing.JTextField();
+        turmadisc = new javax.swing.JTextField();
+        rgdis = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        datadisc = new javax.swing.JTextField();
+        nomedisc = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton16 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel8 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        dat = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField55 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        sobrenome2 = new javax.swing.JTextField();
+        nom1 = new javax.swing.JTextField();
+        rg3 = new javax.swing.JTextField();
+        jTextField16 = new javax.swing.JTextField();
+        busca = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
+        limpa = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
+        rgt = new javax.swing.JFormattedTextField();
+        salvar1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jTextField17 = new javax.swing.JTextField();
@@ -231,8 +235,6 @@ public class Alunos extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jTextField20 = new javax.swing.JTextField();
-        jLabel26 = new javax.swing.JLabel();
         jSeparator10 = new javax.swing.JSeparator();
         jButton11 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
@@ -285,7 +287,6 @@ public class Alunos extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jButton13 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jTextField22 = new javax.swing.JTextField();
@@ -332,33 +333,25 @@ public class Alunos extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(204, 204, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel10.setLayout(null);
+        jPanel10.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Sobrenome");
-        jPanel10.add(jLabel5);
-        jLabel5.setBounds(430, 90, 71, 30);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Data Nascimento");
-        jPanel10.add(jLabel6);
-        jLabel6.setBounds(410, 30, 120, 17);
 
         sobrenome1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sobrenome1ActionPerformed(evt);
             }
         });
-        jPanel10.add(sobrenome1);
-        sobrenome1.setBounds(530, 90, 200, 30);
 
         nome2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nome2ActionPerformed(evt);
             }
         });
-        jPanel10.add(nome2);
-        nome2.setBounds(70, 80, 190, 30);
 
         jPanel13.setBackground(new java.awt.Color(204, 204, 255));
         jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -387,6 +380,11 @@ public class Alunos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(9);
@@ -409,29 +407,21 @@ public class Alunos extends javax.swing.JFrame {
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        jPanel10.add(jPanel13);
-        jPanel13.setBounds(10, 210, 850, 220);
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nome");
-        jPanel10.add(jLabel2);
-        jLabel2.setBounds(20, 90, 36, 17);
 
         try {
             rg1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPanel10.add(rg1);
-        rg1.setBounds(70, 30, 190, 30);
+        rg1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         try {
             data1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPanel10.add(data1);
-        data1.setBounds(530, 30, 150, 30);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/save_all.png"))); // NOI18N
         jButton3.setText("Salvar");
@@ -440,8 +430,59 @@ public class Alunos extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel10.add(jButton3);
-        jButton3.setBounds(70, 450, 105, 30);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(rg1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(data1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14)
+                        .addComponent(nome2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel5)
+                        .addGap(29, 29, 29)
+                        .addComponent(sobrenome1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(68, 68, 68))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rg1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(data1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nome2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sobrenome1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(90, 90, 90)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 510));
 
@@ -470,67 +511,70 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1.addTab("Cadastrar Aluno", jPanel1);
 
         jPanel2.setLayout(null);
-        jPanel2.add(jTextField6);
-        jTextField6.setBounds(50, 30, 200, 31);
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel14.setLayout(null);
+        jPanel14.add(sobrenomedisc);
+        sobrenomedisc.setBounds(650, 30, 180, 31);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("RG");
-        jPanel2.add(jLabel8);
+        jPanel14.add(jLabel8);
         jLabel8.setBounds(20, 30, 40, 31);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/viewmag.png"))); // NOI18N
-        jPanel2.add(jButton1);
-        jButton1.setBounds(270, 30, 80, 31);
+        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel39.setText("Sobrenome");
+        jPanel14.add(jLabel39);
+        jLabel39.setBounds(550, 30, 92, 31);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setText("Turma");
-        jPanel2.add(jLabel16);
-        jLabel16.setBounds(417, 137, 70, 31);
-        jPanel2.add(jTextField56);
-        jTextField56.setBounds(480, 230, 170, 31);
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel38.setText("Periodo");
-        jPanel2.add(jLabel38);
-        jLabel38.setBounds(420, 230, 92, 31);
-        jPanel2.add(jTextField57);
-        jTextField57.setBounds(120, 240, 224, 31);
-
-        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel39.setText("Disciplina");
-        jPanel2.add(jLabel39);
-        jLabel39.setBounds(50, 150, 92, 31);
-
-        jTextField58.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField58ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jTextField58);
-        jTextField58.setBounds(120, 150, 224, 31);
+        jPanel14.add(jLabel16);
+        jLabel16.setBounds(570, 270, 70, 31);
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel40.setText("Sala");
-        jPanel2.add(jLabel40);
-        jLabel40.setBounds(60, 240, 92, 31);
-        jPanel2.add(jTextField59);
-        jTextField59.setBounds(470, 140, 170, 31);
+        jPanel14.add(jLabel40);
+        jLabel40.setBounds(30, 270, 92, 31);
+        jPanel14.add(saladisc);
+        saladisc.setBounds(70, 270, 190, 31);
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel38.setText("Periodo");
+        jPanel14.add(jLabel38);
+        jLabel38.setBounds(320, 270, 92, 31);
+        jPanel14.add(periododisc);
+        periododisc.setBounds(390, 270, 140, 31);
+        jPanel14.add(turmadisc);
+        turmadisc.setBounds(630, 270, 150, 31);
+        jPanel14.add(rgdis);
+        rgdis.setBounds(50, 30, 190, 31);
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 186, Short.MAX_VALUE)
-        );
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel41.setText("Disciplina");
+        jPanel14.add(jLabel41);
+        jLabel41.setBounds(20, 160, 92, 31);
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel42.setText("Data de Nascimento");
+        jPanel14.add(jLabel42);
+        jLabel42.setBounds(330, 150, 130, 31);
+        jPanel14.add(datadisc);
+        datadisc.setBounds(470, 150, 180, 31);
+        jPanel14.add(nomedisc);
+        nomedisc.setBounds(340, 30, 180, 31);
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel43.setText("Nome");
+        jPanel14.add(jLabel43);
+        jLabel43.setBounds(270, 30, 92, 31);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel14.add(jComboBox1);
+        jComboBox1.setBounds(90, 160, 130, 30);
 
         jPanel2.add(jPanel14);
-        jPanel14.setBounds(40, 120, 890, 190);
+        jPanel14.setBounds(20, 60, 910, 340);
 
         jButton16.setText("Salvar");
         jPanel2.add(jButton16);
@@ -539,28 +583,6 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1.addTab("Cadastrar na Disciplina", jPanel2);
 
         jPanel3.setLayout(null);
-
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jTextField7);
-        jTextField7.setBounds(470, 44, 170, 30);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Nome");
-        jPanel3.add(jLabel9);
-        jLabel9.setBounds(420, 50, 40, 17);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/viewmag.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton2);
-        jButton2.setBounds(646, 43, 63, 31);
         jPanel3.add(jSeparator1);
         jSeparator1.setBounds(0, 80, 928, 10);
 
@@ -572,37 +594,24 @@ public class Alunos extends javax.swing.JFrame {
         jPanel8.add(jLabel10);
         jLabel10.setBounds(16, 27, 44, 17);
 
-        jTextField8.setEditable(false);
-        jPanel8.add(jTextField8);
-        jTextField8.setBounds(52, 27, 140, 30);
-
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("NOME");
         jPanel8.add(jLabel11);
         jLabel11.setBounds(10, 110, 40, 17);
 
-        jTextField9.setEditable(false);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        dat.setEditable(false);
+        dat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                datActionPerformed(evt);
             }
         });
-        jPanel8.add(jTextField9);
-        jTextField9.setBounds(60, 110, 120, 30);
+        jPanel8.add(dat);
+        dat.setBounds(160, 190, 120, 30);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("DATA NASCIMENTO");
         jPanel8.add(jLabel14);
         jLabel14.setBounds(20, 200, 150, 17);
-
-        jFormattedTextField2.setEditable(false);
-        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField2ActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jFormattedTextField2);
-        jFormattedTextField2.setBounds(150, 200, 120, 30);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Turno");
@@ -646,14 +655,6 @@ public class Alunos extends javax.swing.JFrame {
         jPanel8.add(jLabel17);
         jLabel17.setBounds(510, 30, 60, 17);
 
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
-            }
-        });
-        jPanel8.add(jTextField15);
-        jTextField15.setBounds(660, 190, 132, 30);
-
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("Observações");
         jPanel8.add(jLabel21);
@@ -664,65 +665,105 @@ public class Alunos extends javax.swing.JFrame {
         jPanel8.add(jLabel22);
         jLabel22.setBounds(520, 110, 50, 17);
 
-        jTextField55.setEditable(false);
-        jTextField55.addActionListener(new java.awt.event.ActionListener() {
+        sobrenome2.setEditable(false);
+        sobrenome2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField55ActionPerformed(evt);
+                sobrenome2ActionPerformed(evt);
             }
         });
-        jPanel8.add(jTextField55);
-        jTextField55.setBounds(290, 100, 190, 30);
+        jPanel8.add(sobrenome2);
+        sobrenome2.setBounds(290, 100, 190, 30);
+
+        nom1.setEditable(false);
+        nom1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nom1ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(nom1);
+        nom1.setBounds(60, 110, 120, 30);
+
+        rg3.setEditable(false);
+        rg3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rg3ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(rg3);
+        rg3.setBounds(52, 27, 140, 30);
+
+        jTextField16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField16ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jTextField16);
+        jTextField16.setBounds(660, 190, 132, 30);
 
         jPanel3.add(jPanel8);
         jPanel8.setBounds(20, 110, 860, 300);
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel18.setText("Buscar pelo Nome");
-        jPanel3.add(jLabel18);
-        jLabel18.setBounds(430, 10, 150, 20);
-
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        busca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/viewmag.png"))); // NOI18N
+        busca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                buscaActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField13);
-        jTextField13.setBounds(50, 40, 160, 30);
-
-        jTextField14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField14ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jTextField14);
-        jTextField14.setBounds(60, 50, 122, 20);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/viewmag.png"))); // NOI18N
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton5);
-        jButton5.setBounds(220, 39, 63, 31);
+        jPanel3.add(busca);
+        busca.setBounds(240, 40, 70, 31);
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("RG");
         jPanel3.add(jLabel19);
-        jLabel19.setBounds(10, 40, 30, 17);
+        jLabel19.setBounds(10, 40, 30, 30);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel20.setText("Buscar pelo RG");
+        jLabel20.setText("Digite o RG para alterar os dados");
         jPanel3.add(jLabel20);
-        jLabel20.setBounds(50, 10, 150, 20);
+        jLabel20.setBounds(50, 10, 270, 20);
 
-        jButton6.setText("Editar");
-        jPanel3.add(jButton6);
-        jButton6.setBounds(40, 440, 90, 30);
+        edit.setText("Editar");
+        edit.setEnabled(false);
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
+        jPanel3.add(edit);
+        edit.setBounds(40, 440, 90, 30);
 
-        jButton7.setText("Excluir");
-        jPanel3.add(jButton7);
-        jButton7.setBounds(180, 440, 80, 30);
+        limpa.setText("Limpar");
+        limpa.setEnabled(false);
+        limpa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(limpa);
+        limpa.setBounds(420, 440, 80, 30);
+
+        excluir.setText("Excluir");
+        excluir.setEnabled(false);
+        jPanel3.add(excluir);
+        excluir.setBounds(180, 440, 80, 30);
+
+        try {
+            rgt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel3.add(rgt);
+        rgt.setBounds(50, 40, 170, 30);
+
+        salvar1.setText("Salvar");
+        salvar1.setEnabled(false);
+        salvar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(salvar1);
+        salvar1.setBounds(300, 440, 80, 30);
 
         jTabbedPane1.addTab("Alterações", jPanel3);
 
@@ -742,7 +783,7 @@ public class Alunos extends javax.swing.JFrame {
         jSeparator9.setBounds(0, 80, 930, 10);
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setText("RA");
+        jLabel24.setText("RG");
         jPanel4.add(jLabel24);
         jLabel24.setBounds(360, 110, 60, 20);
 
@@ -802,19 +843,6 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1.addTab("Lançar Frequencias", jPanel4);
 
         jPanel5.setLayout(null);
-
-        jTextField20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField20ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jTextField20);
-        jTextField20.setBounds(560, 20, 210, 30);
-
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("Disciplina");
-        jPanel5.add(jLabel26);
-        jLabel26.setBounds(460, 20, 100, 30);
         jPanel5.add(jSeparator10);
         jSeparator10.setBounds(0, 60, 930, 10);
 
@@ -995,15 +1023,6 @@ public class Alunos extends javax.swing.JFrame {
         jPanel5.add(jLabel31);
         jLabel31.setBounds(10, 70, 70, 30);
 
-        jButton13.setText("buscar");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton13);
-        jButton13.setBounds(790, 20, 90, 30);
-
         jPanel12.setBackground(new java.awt.Color(153, 102, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -1135,6 +1154,11 @@ public class Alunos extends javax.swing.JFrame {
         jPanel15.add(jScrollPane2);
         jScrollPane2.setBounds(70, 120, 640, 280);
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
@@ -1147,6 +1171,11 @@ public class Alunos extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/remover.png"))); // NOI18N
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1172,10 +1201,6 @@ public class Alunos extends javax.swing.JFrame {
         setBounds(0, 0, 962, 622);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
@@ -1184,33 +1209,39 @@ public class Alunos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
+    private void datActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField2ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
-
-    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:j
-    }//GEN-LAST:event_jTextField14ActionPerformed
+    }//GEN-LAST:event_datActionPerformed
  
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-      
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaActionPerformed
+            
+             String nome =rgt.getText().trim();
+                
+       ArrayList<AlunosModel> a =  b.ListarRG(nome);
+        
+        
+       try {
+           if(rgt.getText().length()>0){
+            for(AlunosModel d : b.ListarRG(nome)){
+                  rg3.setText(d.getRg());
+             nom1.setText(d.getNome());
+              sobrenome2.setText(d.getSobrenome());
+             dat.setText(d.getData());
+          }
+          }else  {
+           JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
+           }
+       } catch (Exception ex) {
+           JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
+       }
+        
+             edit.setEnabled(true);
+             limpa.setEnabled(true);
+             excluir.setEnabled(true);
+            
+             
 
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
+    }//GEN-LAST:event_buscaActionPerformed
 
     private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
         // TODO add your handling code here:
@@ -1228,30 +1259,27 @@ public class Alunos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField38ActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
-
     private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField24ActionPerformed
-
-    private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField20ActionPerformed
 
     private void jTextField29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField29ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField29ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    
-       
+         String nome = nome2.getText();
+          Pattern pattern = Pattern.compile("[0123456789]");  
+	Matcher matcher = pattern.matcher(nome);  
+        if (matcher.find()) {  
+            JOptionPane.showMessageDialog(null, "Digite apenas letra", "aviso", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
           Salvar();
               
            Tab();
             limparCampos(); 
-       
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -1262,9 +1290,9 @@ public class Alunos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_sobrenome1ActionPerformed
 
-    private void jTextField55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField55ActionPerformed
+    private void sobrenome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobrenome2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField55ActionPerformed
+    }//GEN-LAST:event_sobrenome2ActionPerformed
 
     private void nome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome1ActionPerformed
         // TODO add your handling code here:
@@ -1274,10 +1302,6 @@ public class Alunos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nome2ActionPerformed
 
-    private void jTextField58ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField58ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField58ActionPerformed
-
     private void jPanel15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel15KeyReleased
             // TODO add your handling code here:
     }//GEN-LAST:event_jPanel15KeyReleased
@@ -1285,6 +1309,62 @@ public class Alunos extends javax.swing.JFrame {
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
           CarregarTabela(jTextField1.getText());// TODO add your handling code here:
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void limpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpaActionPerformed
+           rg3.setText("");
+             nom1.setText("");
+              sobrenome2.setText("");
+             dat.setText("");    // TODO add your handling code here:
+    }//GEN-LAST:event_limpaActionPerformed
+
+    private void nom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom1ActionPerformed
+       
+    }//GEN-LAST:event_nom1ActionPerformed
+
+    private void rg3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rg3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rg3ActionPerformed
+
+    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField16ActionPerformed
+
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        rg3.setEditable(true);
+             nom1.setEditable(true);
+              sobrenome2.setEditable(true);
+             dat.setEditable(true);
+    }//GEN-LAST:event_editActionPerformed
+
+    private void salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salvar1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+         dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+     
+          DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+          int index = jTable1.getSelectedRow();
+       if(evt.getClickCount()==2){
+           jTabbedPane1.setSelectedIndex(1);
+          rgdis.setText(modelo.getValueAt(index, 0).toString());
+          nomedisc.setText(modelo.getValueAt(index, 1).toString());
+          sobrenomedisc.setText(modelo.getValueAt(index, 2).toString());
+          datadisc.setText(modelo.getValueAt(index, 3).toString());
+       }   
+          
+           
+        
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1322,29 +1402,28 @@ public class Alunos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton busca;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JTextField dat;
     public static javax.swing.JFormattedTextField data1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField datadisc;
+    private javax.swing.JButton edit;
+    private javax.swing.JButton excluir;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1354,7 +1433,6 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1363,7 +1441,6 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -1379,12 +1456,14 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
+    public javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -1416,7 +1495,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
     public javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
@@ -1425,13 +1504,10 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
@@ -1466,19 +1542,22 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField52;
     private javax.swing.JTextField jTextField53;
     private javax.swing.JTextField jTextField54;
-    private javax.swing.JTextField jTextField55;
-    private javax.swing.JTextField jTextField56;
-    private javax.swing.JTextField jTextField57;
-    private javax.swing.JTextField jTextField58;
-    private javax.swing.JTextField jTextField59;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JButton limpa;
+    private javax.swing.JTextField nom1;
     private javax.swing.JTextField nome1;
-    private javax.swing.JTextField nome2;
+    public javax.swing.JTextField nome2;
+    private javax.swing.JTextField nomedisc;
+    private javax.swing.JTextField periododisc;
     public static javax.swing.JFormattedTextField rg1;
-    private javax.swing.JTextField sobrenome1;
+    private javax.swing.JTextField rg3;
+    private javax.swing.JTextField rgdis;
+    private javax.swing.JFormattedTextField rgt;
+    private javax.swing.JTextField saladisc;
+    private javax.swing.JButton salvar1;
+    public javax.swing.JTextField sobrenome1;
+    private javax.swing.JTextField sobrenome2;
+    private javax.swing.JTextField sobrenomedisc;
+    private javax.swing.JTextField turmadisc;
     // End of variables declaration//GEN-END:variables
 }

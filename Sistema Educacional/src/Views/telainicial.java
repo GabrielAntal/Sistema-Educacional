@@ -6,6 +6,8 @@
 package Views;
 
 import Model.Conexao_bd;
+import static Views.Alunos.data1;
+import static Views.Alunos.rg1;
 
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -180,7 +182,7 @@ public class telainicial extends javax.swing.JFrame {
    this.setExtendedState(MAXIMIZED_BOTH);
    
      Date data = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/10/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         labelusuz.setText(format.format(data));
         
     }//GEN-LAST:event_formWindowOpened
@@ -195,37 +197,56 @@ public class telainicial extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        
+       
+                    
          Alunos a = new Alunos();
          a.setVisible(true);
-        
-        /*try {
+         
+          try {
             c.conecta();
+          
             c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
             c.rs.first();
-            if(c.rs.getString("perfil").equals("Diretor")||c.rs.getString("perfil").equals("secretario(a)")){
-               
-        Alunos a = new Alunos();
-             a.setVisible(true);
+            if(c.rs.getString("perfil").equals("Diretor")){
+                  
+                  a.jPanel10.setEnabled(true);
+                 
+                  
+                  
+              
             }else{
-                JOptionPane.showMessageDialog(null, "Você não possui permissão para acessar");
+                a.nome2.setEditable(false);
+         a.rg1.setEditable(false);
+         a.sobrenome1.setEditable(false);
+         a.data1.setEnabled(false);
+            a.jButton3.setEnabled(false);
+           
+                JOptionPane.showMessageDialog(null, "Você não possui permissão para cadastrar alunos", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, ex);
-        }    */
-        
-       // TODO add your handling code here:
+        }
+          
+        c.desconecta();
+                                      
+
+       
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
         try {
             c.conecta();
+          
             c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
             c.rs.first();
             if(c.rs.getString("perfil").equals("Diretor")){
-                Escolar e = new Escolar();
-                e.setVisible(true);
+                    Alunos a = new Alunos();
+                  a.jPanel10.setVisible(true);
+              
             }else{
-                JOptionPane.showMessageDialog(null, "Você não possui permissão para acessar");
+                
+           
+                JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para acessar");
             }
         } catch (SQLException ex) {
             Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, ex);
