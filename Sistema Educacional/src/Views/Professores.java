@@ -14,7 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class Professores extends javax.swing.JFrame {
   Conexao_bd c = new Conexao_bd();
+   PreparedStatement pst;
   ProfessorModel prof;
     private String cpf;
     private String nome;
@@ -267,12 +272,23 @@ public class Professores extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         c.conecta();
+        ArrayList<ProfessorModel> list = new ArrayList<>();
+        DefaultTableModel tabs = new DefaultTableModel ();
         ProfissionalDao p = new ProfissionalDao();
         String nom_procura = jTextField1.getText();
         prof.setNome(nom_procura);
         if(nom_procura.length()>0){
-            // p.mostrar_prof(prof);
-        }else{ JOptionPane.showMessageDialog(null, "Preencha o campo de procura"); // coloca sql de procura por todos
+            list = p.mostrar_prof(nom_procura);
+            jTable1.setModel(tabs);
+            
+           
+            //tabs.add(list);
+        }else{ 
+            try {
+                 pst = c.conexao.prepareStatement("Select nome, cpf, login, senha, perfil from funcionario order by perfil;");// coloca sql de procura por todos
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro no sql" +ex);
+            }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
