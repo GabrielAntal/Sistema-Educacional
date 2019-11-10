@@ -45,31 +45,94 @@ public class Professores extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
          c.conecta();
-         this.PreenchePerfil();
+        // this.PreenchePerfil();
     }
     
-    public void PreenchePerfil(){
+    
+    
+    
+    public void listar(String list){
+    try {
+            ProfissionalDao profissional = new ProfissionalDao();
+            
+            DefaultTableModel tabela = (DefaultTableModel) this.jTable1.getModel();
+            
+            tabela.setNumRows(0);
+            jTable1.getColumnModel().getColumn(0);
+            jTable1.getColumnModel().getColumn(1);
+            jTable1.getColumnModel().getColumn(2);
+            jTable1.getColumnModel().getColumn(3);
+            jTable1.getColumnModel().getColumn(4);
+            
+            
+            for( ProfessorModel p : profissional.mostrar_prof(list) ){
+                tabela.addRow(new Object[]{
+                    p.getNome(),
+                    p.getCpf(),
+                    p.getLogin(),
+                    p.getSenha(),
+                    p.getPerfil()
+                });
+            }
+  
+        } catch (Exception e) {
+            Logger.getLogger(Professores.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    
+    public void limpar_campos(){
+            jTextField1.setText("");
+            jTextField4.setText("");
+            jTextField6.setText("");
+            jTextField9.setText("");
+    
+    
+    }
+    
+    public void Tab(){
+        int linha=0;
+  
+         String nome1 =jTextField6.getText();
+         String cpf1= jFormattedTextField1.getText();
+         String login1= jTextField9.getText();
+         String senha1 = jTextField4.getText();
+        String perfil1 =((String) jComboBox1.getSelectedItem());
+         
+        
+         
+         if(nome.length()>0&&nome1.length()>0&&cpf1.length()>0&&login1.length()>0&&senha1.length()>0){
+         jTable1.setValueAt(nome1, linha, 0);
+           jTable1.setValueAt(cpf1, linha, 1);
+           jTable1.setValueAt(login1, linha, 2);
+           jTable1.setValueAt(senha1, linha, 3);
+           jTable1.setValueAt(perfil1, linha, 4);
+           linha+=1;
+           
+         
+    }
+    }
+    
+    /*public void PreenchePerfil(){
         c.conecta();
         
       c.executaSql("select perfil from profissional group by perfil ");
         try {
             c.rs.first();
-            
-                          
-                        //jComboBox.removeAllItems();
-             
+
               do{
                   
                  jComboBox1.addItem(c.rs.getString("perfil"));
                            
                               
           }while(c.rs.next());
-          
+          c.rs.close();
           
         } catch (SQLException e) {
         }
+        
         c.desconecta();
-    }
+    }* /
     
     
  
@@ -87,7 +150,6 @@ public class Professores extends javax.swing.JFrame {
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
@@ -99,47 +161,33 @@ public class Professores extends javax.swing.JFrame {
         jTextField9 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dados do Professor");
 
         jTabbedPane5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jPanel2.setLayout(null);
-        jPanel2.add(jTextField3);
-        jTextField3.setBounds(660, 173, 220, 30);
-        jPanel2.add(jTextField4);
-        jTextField4.setBounds(370, 173, 205, 30);
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("CPF");
-        jPanel2.add(jLabel4);
-        jLabel4.setBounds(660, 142, 80, 20);
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField6);
-        jTextField6.setBounds(50, 80, 490, 30);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Nome");
-        jPanel2.add(jLabel7);
-        jLabel7.setBounds(50, 50, 80, 20);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Perfil");
-        jPanel2.add(jLabel8);
-        jLabel8.setBounds(30, 250, 80, 20);
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -147,8 +195,6 @@ public class Professores extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1);
-        jButton1.setBounds(668, 477, 90, 40);
 
         jButton4.setText("Salvar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -156,28 +202,97 @@ public class Professores extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton4);
-        jButton4.setBounds(50, 477, 90, 40);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("LOGIN");
-        jPanel2.add(jLabel11);
-        jLabel11.setBounds(50, 142, 80, 20);
-        jPanel2.add(jTextField9);
-        jTextField9.setBounds(50, 173, 205, 30);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setText("Senha");
-        jPanel2.add(jLabel12);
-        jLabel12.setBounds(370, 142, 80, 20);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diretor(a)", "Secretário(a)", "Professor(a)" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(80, 250, 150, 30);
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(240, 240, 240)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(210, 210, 210)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(528, 528, 528)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(87, 87, 87)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(108, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(197, 197, 197)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jTabbedPane5.addTab("Cadastrar Profissional", jPanel2);
 
@@ -186,6 +301,11 @@ public class Professores extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
         jPanel3.add(jTextField1);
@@ -234,15 +354,6 @@ public class Professores extends javax.swing.JFrame {
         jPanel3.add(jScrollPane1);
         jScrollPane1.setBounds(40, 160, 680, 280);
 
-        jButton5.setText("buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton5);
-        jButton5.setBounds(380, 90, 90, 30);
-
         jTabbedPane5.addTab("Consultar Profissional", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,34 +381,12 @@ public class Professores extends javax.swing.JFrame {
         setBounds(0, 0, 961, 597);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        c.conecta();
-        ArrayList<ProfessorModel> list = new ArrayList<>();
-        DefaultTableModel tabs = new DefaultTableModel ();
-        ProfissionalDao p = new ProfissionalDao();
-        String nom_procura = jTextField1.getText();
-        prof.setNome(nom_procura);
-        if(nom_procura.length()>0){
-            list = p.mostrar_prof(nom_procura);
-            jTable1.setModel(tabs);
-            
-           
-            //tabs.add(list);
-        }else{ 
-            try {
-                 pst = c.conexao.prepareStatement("Select nome, cpf, login, senha, perfil from funcionario order by perfil;");// coloca sql de procura por todos
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro no sql" +ex);
-            }
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        PreenchePerfil();
+       // PreenchePerfil();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -305,7 +394,7 @@ public class Professores extends javax.swing.JFrame {
         c.conecta();
 
         String name = jTextField6.getText();
-        String fpc = jTextField3.getText();
+        String fpc = jFormattedTextField1.getText();
         String log = jTextField9.getText();
         String password = jTextField4.getText();
 
@@ -327,6 +416,11 @@ public class Professores extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
         }
+        
+        Tab();
+        
+        limpar_campos();
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -336,6 +430,15 @@ public class Professores extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String procura = jTextField1.getText();
+        listar(procura);
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -376,8 +479,8 @@ public class Professores extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
@@ -392,7 +495,6 @@ public class Professores extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField9;
