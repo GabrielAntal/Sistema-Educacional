@@ -3,6 +3,7 @@ package Controller;
 
 import Model.Conexao_bd;
 import Model.ProfessorModel;
+import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,18 +15,19 @@ import javax.swing.JOptionPane;
  *
  * @author Gabriel
  */
-public class ProfissionalDao {
+public class ProfissionalDao extends Conexao_bd{
     
-    Conexao_bd c = new Conexao_bd();
+   PreparedStatement pst;
     
-    private ProfessorModel profissional;
+    
+    
     
     
     public void Inserir_Profissional (ProfessorModel prof ){
-        c.conecta();
+        conecta();
         
         try {
-            PreparedStatement pst = c.conexao.prepareStatement("INSERT INTO PROFISSIONAL(nome_prof, cpf, login, senha, perfil)"
+            PreparedStatement pst = conexao.prepareStatement("INSERT INTO PROFISSIONAL(nome_prof, cpf, login, senha, perfil)"
                     + " values(?,?,?,?,?); ");
                     pst.setString(1, prof.getNome());
                     pst.setString(2, prof.getCpf());
@@ -42,26 +44,31 @@ public class ProfissionalDao {
     } 
         
         public ArrayList<ProfessorModel> mostrar_prof(String nomeProf){
-            c.conecta();
+            
             ArrayList<ProfessorModel> list = new ArrayList<>();
+            conecta();
+         
             try {
-                PreparedStatement pst = c.conexao.prepareStatement("Select nome_prof, cpf, login, senha, perfil from Profissional where nome_prof like ? and perfil like 'Professor%'");
-                pst.setString(1, "'%"+nomeProf+"%'");
-                pst.executeQuery();
-                
-                while(c.rs.next()){
-                    profissional.setNome(c.rs.getString("nome_aluno"));
-                    profissional.setCpf(c.rs.getString("cpf"));
-                    profissional.setLogin(c.rs.getString("login"));
-                    profissional.setSenha(c.rs.getString("senha"));
-                    profissional.setPerfil(c.rs.getString("perfil"));
+                pst = conexao.prepareStatement("Select * from profissional where nome_prof ilike'"+ 
+                        nomeProf+"%'");
+                rs =pst.executeQuery();
+                ProfessorModel profissional = new ProfessorModel();
+                while(rs.next()){
+                    profissional.setNome(rs.getString("nome_prof"));
+                    profissional.setCpf(rs.getString("cpf"));
+                    profissional.setLogin(rs.getString("login"));
+                    profissional.setSenha(rs.getString("senha"));
+                    profissional.setPerfil(rs.getString("perfil"));
+                    
                     list.add(profissional);
                 }
-                return list;
+                
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Verificar procura_prof "+e);
-                return null;
+                JOptionPane.showMessageDialog(null, "Verificar mostra_prof "+e);
+                
             }
+            
+            return list;
             
         }
         
