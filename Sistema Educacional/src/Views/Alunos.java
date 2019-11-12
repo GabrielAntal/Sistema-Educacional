@@ -744,6 +744,11 @@ public class Alunos extends javax.swing.JFrame {
 
         excluir.setText("Excluir");
         excluir.setEnabled(false);
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
+            }
+        });
         jPanel3.add(excluir);
         excluir.setBounds(180, 440, 80, 30);
 
@@ -1334,6 +1339,7 @@ public class Alunos extends javax.swing.JFrame {
              nom1.setEditable(true);
               sobrenome2.setEditable(true);
              dat.setEditable(true);
+          rg3.requestFocus();
     }//GEN-LAST:event_editActionPerformed
 
     private void salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar1ActionPerformed
@@ -1365,6 +1371,22 @@ public class Alunos extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+              String rg = rg3.getText().trim();
+        
+        int p  = JOptionPane.showConfirmDialog( null,"Confirma a exclusão", "Exclusão",JOptionPane.YES_NO_OPTION);
+                if(p==JOptionPane.YES_OPTION){
+                      
+                      b.ExcluirAluno(rg);
+                     JOptionPane.showMessageDialog(null, "Aluno excluido com sucesso");
+        
+                }
+      
+        
+        
+              // TODO add your handling code here:
+    }//GEN-LAST:event_excluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1550,7 +1572,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField nomedisc;
     private javax.swing.JTextField periododisc;
     public static javax.swing.JFormattedTextField rg1;
-    private javax.swing.JTextField rg3;
+    public javax.swing.JTextField rg3;
     private javax.swing.JTextField rgdis;
     private javax.swing.JFormattedTextField rgt;
     private javax.swing.JTextField saladisc;

@@ -15,15 +15,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
+
+
 
 /**
  *
@@ -53,6 +54,7 @@ public class AlunoDao extends Conexao_bd  {
                 pst.execute();
 
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Dê dois clique na tabela caso deseja cadastrar o aluno na disciplina" ,"informação",JOptionPane.INFORMATION_MESSAGE );
                 pst.close();
 
            } catch (SQLException ex) {
@@ -70,7 +72,8 @@ public class AlunoDao extends Conexao_bd  {
             conecta();
 
             try {
-                pst = conexao.prepareStatement("select* from aluno where nome_aluno ilike'"+nome+ "%'");
+                pst = conexao.prepareStatement("select* from aluno where nome_aluno ilike'"+
+                        nome+ "%'");
                 rs =pst.executeQuery();
                 while(rs.next()){
 
@@ -120,12 +123,13 @@ public class AlunoDao extends Conexao_bd  {
                 }
                 
                 
-
+     
 
             } catch (SQLException ex) {
                JOptionPane.showMessageDialog(null,"erro no dao" +ex);
             }
- 
+       
+       // pst.close();
        
                      return listaa;
                  
@@ -133,6 +137,34 @@ public class AlunoDao extends Conexao_bd  {
           
             
      }
+        
+        public boolean ExcluirAluno(String rg){
+             conecta();
+        
+        try {
+            stmt =conexao.createStatement();
+            String sql = "delete from aluno where rg_aluno='"+rg+ "'";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            desconecta();
+        
+           
+        } catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null, "erro" +ex);
+        
+            
+            return false;
+            
+          
+        }
+        return true;
+            
+            
+        }
+        
+        
+        
+        
      
 
 
