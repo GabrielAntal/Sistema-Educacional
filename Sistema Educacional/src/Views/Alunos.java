@@ -13,9 +13,7 @@ import Controller.ControlAluno;
 
 import Model.AlunosModel;
 import Model.Conexao_bd;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+
 import static java.lang.System.in;
 import static java.lang.System.out;
 import java.sql.Date;
@@ -61,7 +59,9 @@ public class Alunos extends javax.swing.JFrame {
     public void CarregarTabela(String aluno){
       try{
         //AlunosModel b = new AlunosModel();
-         AlunoDao a = new AlunoDao();
+         AlunoDao a = new AlunoDao(); 
+         
+         
         
          DefaultTableModel modelo = (DefaultTableModel)   this.jTable2.getModel();
          
@@ -225,10 +225,6 @@ public class Alunos extends javax.swing.JFrame {
         jTextField17 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
-        jLabel24 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -282,12 +278,13 @@ public class Alunos extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JSeparator();
         jSeparator16 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        jTextField21 = new javax.swing.JTextField();
-        jButton12 = new javax.swing.JButton();
-        jLabel29 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
+        rgnotas = new javax.swing.JFormattedTextField();
+        jLabel29 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        jLabel44 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jTextField22 = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
@@ -757,6 +754,11 @@ public class Alunos extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        rgt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rgtKeyReleased(evt);
+            }
+        });
         jPanel3.add(rgt);
         rgt.setBounds(50, 40, 170, 30);
 
@@ -787,24 +789,6 @@ public class Alunos extends javax.swing.JFrame {
         jPanel4.add(jSeparator9);
         jSeparator9.setBounds(0, 80, 930, 10);
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setText("RG");
-        jPanel4.add(jLabel24);
-        jLabel24.setBounds(360, 110, 60, 20);
-
-        jTextField18.setEditable(false);
-        jPanel4.add(jTextField18);
-        jTextField18.setBounds(400, 110, 240, 30);
-
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel25.setText("Aluno");
-        jPanel4.add(jLabel25);
-        jLabel25.setBounds(20, 110, 60, 20);
-
-        jTextField19.setEditable(false);
-        jPanel4.add(jTextField19);
-        jTextField19.setBounds(70, 110, 220, 30);
-
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel7.setLayout(null);
 
@@ -817,25 +801,28 @@ public class Alunos extends javax.swing.JFrame {
                 "Nome", "Sobrenome", "Disciplina", "Nª de Faltas"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jTable3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane3.setViewportView(jTable3);
         if (jTable3.getColumnModel().getColumnCount() > 0) {
             jTable3.getColumnModel().getColumn(0).setResizable(false);
+            jTable3.getColumnModel().getColumn(1).setResizable(false);
+            jTable3.getColumnModel().getColumn(2).setResizable(false);
+            jTable3.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel7.add(jScrollPane3);
-        jScrollPane3.setBounds(40, 30, 680, 220);
+        jScrollPane3.setBounds(20, 30, 780, 280);
 
         jPanel4.add(jPanel7);
-        jPanel7.setBounds(30, 160, 840, 270);
+        jPanel7.setBounds(30, 100, 840, 330);
 
         jButton9.setText("Editar");
         jPanel4.add(jButton9);
@@ -1004,26 +991,12 @@ public class Alunos extends javax.swing.JFrame {
 
         jPanel5.add(jPanel6);
         jPanel6.setBounds(20, 110, 780, 320);
-        jPanel5.add(jLabel28);
-        jLabel28.setBounds(60, 80, 180, 20);
-        jPanel5.add(jTextField21);
-        jTextField21.setBounds(60, 20, 210, 30);
 
-        jButton12.setText("buscar");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton12);
-        jButton12.setBounds(290, 20, 90, 30);
+        jLabel45.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel5.add(jLabel45);
+        jLabel45.setBounds(140, 70, 170, 30);
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel29.setText("RG");
-        jPanel5.add(jLabel29);
-        jLabel29.setBounds(14, 20, 30, 30);
-
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel31.setText("Aluno");
         jPanel5.add(jLabel31);
         jLabel31.setBounds(10, 70, 70, 30);
@@ -1031,19 +1004,52 @@ public class Alunos extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(153, 102, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        try {
+            rgnotas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel29.setText("RG");
+
+        jButton12.setText("buscar");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 916, Short.MAX_VALUE)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rgnotas, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(565, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 56, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rgnotas, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jPanel5.add(jPanel12);
         jPanel12.setBounds(0, 0, 920, 60);
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel5.add(jLabel44);
+        jLabel44.setBounds(70, 70, 140, 30);
 
         jTabbedPane1.addTab("Lançar Notas", jPanel5);
 
@@ -1157,7 +1163,7 @@ public class Alunos extends javax.swing.JFrame {
         }
 
         jPanel15.add(jScrollPane2);
-        jScrollPane2.setBounds(70, 120, 640, 280);
+        jScrollPane2.setBounds(70, 120, 770, 280);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1220,13 +1226,12 @@ public class Alunos extends javax.swing.JFrame {
  
     private void buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaActionPerformed
             
-             String nome =rgt.getText().trim();
-                
-       ArrayList<AlunosModel> a =  b.ListarRG(nome);
-        
-        
+    
        try {
-           if(rgt.getText().length()>0){
+            String nome =rgt.getText().trim();
+               ArrayList<AlunosModel> a =  b.ListarRG(nome);
+               
+           if(nome!=null){
             for(AlunosModel d : b.ListarRG(nome)){
                   rg3.setText(d.getRg());
              nom1.setText(d.getNome());
@@ -1243,7 +1248,7 @@ public class Alunos extends javax.swing.JFrame {
              edit.setEnabled(true);
              limpa.setEnabled(true);
              excluir.setEnabled(true);
-            
+            salvar1.setEnabled(true);
              
 
     }//GEN-LAST:event_buscaActionPerformed
@@ -1257,7 +1262,21 @@ public class Alunos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+          String nome =rgnotas.getText().trim();
+                
+       ArrayList<AlunosModel> a =  b.ListarRG(nome);
+        
+        
+       
+           if(rgnotas.getText().length()>0){
+            for(AlunosModel d : b.ListarRG(nome)){
+                  jLabel44.setText(d.getNome());
+                  jLabel45.setText(d.getSobrenome());
+        
+            }
+           }
+        
+        
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jTextField38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField38ActionPerformed
@@ -1339,11 +1358,26 @@ public class Alunos extends javax.swing.JFrame {
              nom1.setEditable(true);
               sobrenome2.setEditable(true);
              dat.setEditable(true);
+            
           rg3.requestFocus();
     }//GEN-LAST:event_editActionPerformed
 
     private void salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar1ActionPerformed
-        // TODO add your handling code here:
+          AlunoDao a = new AlunoDao();
+                                             
+          String rg = rg3.getText().trim();
+         String nome =nom1.getText();
+         String sobrenome= sobrenome2.getText();
+         String data = dat.getText().trim();
+            
+          
+              AlunosModel b = new AlunosModel(nome, sobrenome, rg,data);
+          
+          a.AlterarAluno(b);
+           
+        
+        
+        
     }//GEN-LAST:event_salvar1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1375,7 +1409,7 @@ public class Alunos extends javax.swing.JFrame {
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
               String rg = rg3.getText().trim();
         
-        int p  = JOptionPane.showConfirmDialog( null,"Confirma a exclusão", "Exclusão",JOptionPane.YES_NO_OPTION);
+        int p  = JOptionPane.showConfirmDialog( null,"Deseja excluir ", "Exclusão",JOptionPane.YES_NO_OPTION);
                 if(p==JOptionPane.YES_OPTION){
                       
                       b.ExcluirAluno(rg);
@@ -1387,6 +1421,10 @@ public class Alunos extends javax.swing.JFrame {
         
               // TODO add your handling code here:
     }//GEN-LAST:event_excluirActionPerformed
+
+    private void rgtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rgtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rgtKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1461,10 +1499,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
@@ -1481,6 +1516,8 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -1528,9 +1565,6 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
@@ -1574,6 +1608,7 @@ public class Alunos extends javax.swing.JFrame {
     public static javax.swing.JFormattedTextField rg1;
     public javax.swing.JTextField rg3;
     private javax.swing.JTextField rgdis;
+    private javax.swing.JFormattedTextField rgnotas;
     private javax.swing.JFormattedTextField rgt;
     private javax.swing.JTextField saladisc;
     private javax.swing.JButton salvar1;
