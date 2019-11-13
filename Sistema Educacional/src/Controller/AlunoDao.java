@@ -163,7 +163,29 @@ public class AlunoDao extends Conexao_bd  {
         }
         
         
-        
+        public  void AlterarAluno(AlunosModel aluno){
+            conecta();
+            try {
+               pst = conexao.prepareStatement("update aluno set nome_aluno =?, sobrenome=?, data_nasc=? where rg_aluno =?" );
+               
+                pst.setString(1, aluno.getNome());
+                     pst.setString(2, aluno.getSobrenome());
+                pst.setString(3, aluno.getData());
+                 pst.setString(4, aluno.getRg());
+                pst.executeUpdate();
+                pst.close();
+                     JOptionPane.showMessageDialog(null,"Alterado com sucesso" );
+                desconecta();
+            } catch (SQLException e) {
+                
+                JOptionPane.showMessageDialog(null,"erro no AlterarAluno" +e);
+            }
+            
+            
+            
+            
+            
+        }
         
      
 
