@@ -49,11 +49,12 @@ public class ProfissionalDao extends Conexao_bd{
             conecta();
          
             try {
-                pst = conexao.prepareStatement("Select * from profissional where nome_prof ilike'"+ 
+                pst = conexao.prepareStatement("Select * from profissional where nome_prof ilike'%"+ 
                         nomeProf+"%'");
                 rs =pst.executeQuery();
-                ProfessorModel profissional = new ProfessorModel();
+                
                 while(rs.next()){
+                    ProfessorModel profissional = new ProfessorModel();
                     profissional.setNome(rs.getString("nome_prof"));
                     profissional.setCpf(rs.getString("cpf"));
                     profissional.setLogin(rs.getString("login"));
@@ -63,7 +64,7 @@ public class ProfissionalDao extends Conexao_bd{
                     list.add(profissional);
                 }
                 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Verificar mostra_prof "+e);
                 
             }
