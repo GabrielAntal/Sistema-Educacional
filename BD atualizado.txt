@@ -1,0 +1,168 @@
+
+CREATE SEQUENCE public.sala_id_sala_seq_1;
+
+CREATE TABLE public.sala (
+                id_sala INTEGER NOT NULL DEFAULT nextval('public.sala_id_sala_seq_1'),
+                nome_sala VARCHAR,
+                CONSTRAINT sala_pk PRIMARY KEY (id_sala)
+);
+
+
+ALTER SEQUENCE public.sala_id_sala_seq_1 OWNED BY public.sala.id_sala;
+
+CREATE SEQUENCE public.profissional_id_prof_seq;
+
+CREATE TABLE public.profissional (
+                id_prof VARCHAR NOT NULL DEFAULT nextval('public.profissional_id_prof_seq'),
+                login VARCHAR NOT NULL,
+                perfil VARCHAR NOT NULL,
+                senha VARCHAR NOT NULL,
+                CONSTRAINT profi_pk PRIMARY KEY (id_prof)
+);
+
+
+ALTER SEQUENCE public.profissional_id_prof_seq OWNED BY public.profissional.id_prof;
+
+CREATE TABLE public.Professor (
+                id_prof INTEGER NOT NULL,
+                Nome_professor VARCHAR NOT NULL,
+                cpf VARCHAR NOT NULL,
+                sobrenome VARCHAR NOT NULL,
+                CONSTRAINT professor_pk PRIMARY KEY (id_prof)
+);
+
+
+CREATE SEQUENCE public.disicplina_iddisc_seq;
+
+CREATE TABLE public.Disicplina (
+                idDisc INTEGER NOT NULL DEFAULT nextval('public.disicplina_iddisc_seq'),
+                nome_disc VARCHAR NOT NULL,
+                CONSTRAINT iddisc_pk PRIMARY KEY (idDisc)
+);
+
+
+ALTER SEQUENCE public.disicplina_iddisc_seq OWNED BY public.Disicplina.idDisc;
+
+CREATE SEQUENCE public.aluno_cod_aluno_seq;
+
+CREATE TABLE public.Aluno (
+                cod_aluno INTEGER NOT NULL DEFAULT nextval('public.aluno_cod_aluno_seq'),
+                rg_aluno VARCHAR NOT NULL,
+                nome_aluno VARCHAR NOT NULL,
+                Data_nasc VARCHAR NOT NULL,
+                sobrenome VARCHAR NOT NULL,
+                sexo VARCHAR NOT NULL,
+                CONSTRAINT ra_pk PRIMARY KEY (cod_aluno)
+);
+
+
+ALTER SEQUENCE public.aluno_cod_aluno_seq OWNED BY public.Aluno.cod_aluno;
+
+CREATE SEQUENCE public.matricula_idreg_seq_1_1_1;
+
+CREATE TABLE public.matricula (
+                idReg INTEGER NOT NULL DEFAULT nextval('public.matricula_idreg_seq_1_1_1'),
+                cod_aluno INTEGER NOT NULL,
+                CONSTRAINT idreg_pk PRIMARY KEY (idReg, cod_aluno)
+);
+
+
+ALTER SEQUENCE public.matricula_idreg_seq_1_1_1 OWNED BY public.matricula.idReg;
+
+CREATE TABLE public.Turma (
+                turma_pk VARCHAR NOT NULL,
+                idReg INTEGER NOT NULL,
+                cod_aluno INTEGER NOT NULL,
+                turno VARCHAR NOT NULL,
+                CONSTRAINT turma_pk PRIMARY KEY (turma_pk, idReg, cod_aluno)
+);
+
+
+CREATE SEQUENCE public.bloco_idbloco_seq_1;
+
+CREATE TABLE public.Bloco (
+                idBloco INTEGER NOT NULL DEFAULT nextval('public.bloco_idbloco_seq_1'),
+                turma_pk VARCHAR NOT NULL,
+                idReg INTEGER NOT NULL,
+                cod_aluno INTEGER NOT NULL,
+                id_sala INTEGER NOT NULL,
+                nome VARCHAR NOT NULL,
+                CONSTRAINT idbloco_pk PRIMARY KEY (idBloco, turma_pk, idReg, cod_aluno, id_sala)
+);
+
+
+ALTER SEQUENCE public.bloco_idbloco_seq_1 OWNED BY public.Bloco.idBloco;
+
+CREATE SEQUENCE public.turma_disc_idpk_seq;
+
+CREATE SEQUENCE public.turma_disc_idturmadisc_seq;
+
+CREATE TABLE public.Turma_disc (
+                idDisc INTEGER NOT NULL,
+                turma_pk VARCHAR NOT NULL,
+                idReg INTEGER NOT NULL,
+                cod_aluno INTEGER NOT NULL,
+                id_prof INTEGER NOT NULL,
+                idpk INTEGER NOT NULL DEFAULT nextval('public.turma_disc_idpk_seq'),
+                falta INTEGER,
+                media_final DOUBLE PRECISION,
+                nota DOUBLE PRECISION,
+                bimestre VARCHAR,
+                idTurmaDisc INTEGER NOT NULL DEFAULT nextval('public.turma_disc_idturmadisc_seq'),
+                serie VARCHAR,
+                CONSTRAINT tur_disc_pk PRIMARY KEY (idDisc, turma_pk, idReg, cod_aluno, id_prof, idpk)
+);
+
+
+ALTER SEQUENCE public.turma_disc_idpk_seq OWNED BY public.Turma_disc.idpk;
+
+ALTER SEQUENCE public.turma_disc_idturmadisc_seq OWNED BY public.Turma_disc.idTurmaDisc;
+
+ALTER TABLE public.Bloco ADD CONSTRAINT sala_bloco_fk
+FOREIGN KEY (id_sala)
+REFERENCES public.sala (id_sala)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Turma_disc ADD CONSTRAINT professor_turma_disc_fk
+FOREIGN KEY (id_prof)
+REFERENCES public.Professor (id_prof)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Turma_disc ADD CONSTRAINT disicplina_turma_disc_fk
+FOREIGN KEY (idDisc)
+REFERENCES public.Disicplina (idDisc)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.matricula ADD CONSTRAINT aluno_registro_do_aluno_fk
+FOREIGN KEY (cod_aluno)
+REFERENCES public.Aluno (cod_aluno)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Turma ADD CONSTRAINT matricula_turma_fk
+FOREIGN KEY (idReg, cod_aluno)
+REFERENCES public.matricula (idReg, cod_aluno)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Turma_disc ADD CONSTRAINT turma_turma_disc_fk
+FOREIGN KEY (turma_pk, cod_aluno, idReg)
+REFERENCES public.Turma (turma_pk, cod_aluno, idReg)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Bloco ADD CONSTRAINT turma_bloco_fk
+FOREIGN KEY (turma_pk, cod_aluno, idReg)
+REFERENCES public.Turma (turma_pk, cod_aluno, idReg)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
