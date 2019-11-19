@@ -7,6 +7,8 @@ package Controller;
 
 import Model.AlunosModel;
 import Model.Conexao_bd;
+import Model.Disciplina;
+
 import Views.Alunos;
 import java.awt.List;
 import java.sql.Connection;
@@ -35,23 +37,30 @@ public class AlunoDao extends Conexao_bd  {
  
     PreparedStatement pst =null;
     private AlunosModel aluno;
-
+    
+    
+    
+    
+    
+    
     public  void InserirAluno(AlunosModel aluno){
         conecta();
     
         try {
               //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-               PreparedStatement pst = conexao.prepareStatement("insert into aluno(nome_aluno,sobrenome,rg_aluno,data_nasc) values(?,?,?,?)");
+               PreparedStatement pst = conexao.prepareStatement("insert into aluno(cod_aluno,nome_aluno,sobrenome,rg_aluno,data_nasc,sexo) values(default,?,?,?,?,?)");
    
           
                
-              
+             
                 pst.setString(1, aluno.getNome());
                 pst.setString(2, aluno.getSobrenome());
                 pst.setString(3, aluno.getRg());
-              pst.setString(4, aluno.getData());
-
-                pst.execute();
+                pst.setString(4, aluno.getData());
+                pst.setString(5, aluno.getSexo());
+              
+              
+                pst.executeUpdate();
 
                 JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
                     JOptionPane.showMessageDialog(null, "Dê dois clique na tabela caso deseja cadastrar o aluno na disciplina" ,"informação",JOptionPane.INFORMATION_MESSAGE );
@@ -82,7 +91,7 @@ public class AlunoDao extends Conexao_bd  {
                     a.setRg(rs.getString("rg_aluno")); 
                     a.setSobrenome(rs.getString("sobrenome")); 
                     a.setData(rs.getString("data_nasc"));
-
+                  
                     listaa1.add(a);
 
                     
@@ -104,7 +113,7 @@ public class AlunoDao extends Conexao_bd  {
         public ArrayList<AlunosModel> ListarRG(String rg){ 
             
             ArrayList<AlunosModel> listaa= new ArrayList<>();
-            conecta();
+           conecta();
    
             try {
                 pst = conexao.prepareStatement("select* from aluno where rg_aluno='"+rg+ "'");
@@ -118,6 +127,7 @@ public class AlunoDao extends Conexao_bd  {
                     a.setRg(rs.getString("rg_aluno")); 
                     a.setSobrenome(rs.getString("sobrenome")); 
                     a.setData(rs.getString("data_nasc"));
+                   
                 
                listaa.add(a);
                 }
@@ -143,8 +153,11 @@ public class AlunoDao extends Conexao_bd  {
         
         try {
             stmt =conexao.createStatement();
-            String sql = "delete from aluno where rg_aluno='"+rg+ "'";
+            String sql = "delete  from aluno where rg_aluno='"+rg+ "'";
             stmt.executeUpdate(sql);
+            String sql1 = "update aluno set cod_aluno =0 where rg_aluno ='"+rg+"'";
+            stmt.executeUpdate(sql1);
+            
             stmt.close();
             desconecta();
         
@@ -186,7 +199,19 @@ public class AlunoDao extends Conexao_bd  {
             
             
         }
-        
+         public void teste(String nome){
+             conecta();
+                try {
+             
+            String sql ="select id_sala from sala where nome_sala ='" +nome+ "'";
+       
+            pst.executeQuery(sql);
+           
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         }
      
 
 
