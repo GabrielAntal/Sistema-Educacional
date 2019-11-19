@@ -9,25 +9,22 @@ CREATE TABLE if not exists ALUNO (
                     CONSTRAINT COD_ALUNO PRIMARY KEY (cod_aluno)
                     );
 
-                    Create table if not exists PER_ALUNO (
+                    Create table if not exists PER_ALUNO_DISC (
                     cod_per serial ,
-                    cod_aluno serial 
+                    cod_aluno serial,
+		    cod_disc serial,
                     );
 
 
                   
-           create  exists type tipo_periodo as ENUM ('B','T','S');       
+                
 		    CReate table if not exists PERIODO (
                     cod_per serial primary key,
                     nota_aluno decimal (2,1) Not NULL,
-                    tipo_per tipo_periodo Not NULL,
                     ordinal_per int  Not NULL
                     );
 
 
-                    create table if not exists PER_DISC (
-                    cod_per serial NOT NULL,
-                    cod_disc serial NOT NULL);
 
 
                     
@@ -49,7 +46,7 @@ CREATE TABLE if not exists ALUNO (
 
                     create table if not exists TURNO (
                     cod_turno SERIAL primary key,
-		    		descricao_turno character varying 
+		    descricao_turno character varying 
                     );
                     
 
