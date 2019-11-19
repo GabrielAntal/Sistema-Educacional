@@ -13,20 +13,48 @@ public class ProfessorModel {
     
         private String nome;
         private String cpf;
-        private String login;
-        private String senha;
-        private String perfil;
+        private int idProf;
+        private String sobrenome;
+        private String sexo;
 
-    public ProfessorModel(String nome, String cpf, String login, String senha, String perfil) {
+    public ProfessorModel(String nome, String cpf, int idProf, String sobrenome, String sexo) {
         this.nome = nome;
         this.cpf = cpf;
-        this.login = login;
-        this.senha = senha;
-        this.perfil = perfil;
+        this.idProf = idProf;
+        this.sobrenome = sobrenome;
+        this.sexo = sexo;
     }
 
+    public int getIdProf() {
+        return idProf;
+    }
+
+    public void setIdProf(int idProf) {
+        this.idProf = idProf;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+
+        
+        
+        
     public ProfessorModel() {
-        //To change body of generated methods, choose Tools | Templates.
+   
     }
 
     public String getNome() {
@@ -41,34 +69,7 @@ public class ProfessorModel {
         this.cpf = cpf;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getPerfil() {
-        return perfil;
-    }
-        
+  
         
       
 

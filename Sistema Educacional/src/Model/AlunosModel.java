@@ -15,20 +15,46 @@ import javax.swing.JTextField;
  */
 public class AlunosModel {
    
- 
+    private int cod;
     private String nome;
+ private String sexo;
     private String sobrenome;
     private String rg;
    private String Data;
 
-    public AlunosModel( String nome, String sobrenome, String rg, String Data) {
-      
+    public AlunosModel(String nome, String sexo, String sobrenome, String rg, String Data, int cod) {
         this.nome = nome;
+        this.sexo = sexo;
         this.sobrenome = sobrenome;
         this.rg = rg;
-         this.Data=Data;
-        
+        this.cod =cod;
+        this.Data = Data;
     }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
+    }
+
+   
+   
+   
+
+   
+
+  
+  
 
  
 
@@ -44,6 +70,8 @@ public class AlunosModel {
         this.Data = Data;
     }
 
+ 
+  
     
 
  
