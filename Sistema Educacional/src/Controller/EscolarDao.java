@@ -8,10 +8,13 @@ package Controller;
 import Model.Bloco;
 import Model.Conexao_bd;
 import Model.Disciplina;
+import Model.RegistroAlunoModel;
 import Model.Sala;
 import Model.Turma;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
 
 /**
@@ -90,7 +93,65 @@ public class EscolarDao extends Conexao_bd {
         
     }
     
+      public void InserirDisicplina(Disciplina disc){
+        conecta();
+          try {
+        PreparedStatement pst= conexao.prepareStatement("insert into  disicplina (iddisc, nome_disc) values(default,?)");
+      
+        pst.setString(1, disc.getNome());
+      
+            pst.executeUpdate();
+            
+            
+        } catch (SQLException ex) {
+            
+            JOptionPane.showMessageDialog(null, "nao cadastrou" +ex);
+        }finally{
+            desconecta();
+        }
+        
+        
+        
+    }
     
+    
+      
+    public void InserirResgistro(RegistroAlunoModel alu){
+        conecta();
+          try {
+            
+                
+                
+                
+      PreparedStatement pst= conexao.prepareStatement("insert into turma_disc(idpk,turma_pk,idreg,cod_aluno,cod_prof,falta,media_final,nota1,nota2,nota3,nota4,bimestre,serie) "
+              + "values(default,?,?,?,?,?,?,?,?,?,?,?,?)");
+      
+        pst.setString(1, alu.getTurma().getTurma_tipo());
+        pst.setInt(2, alu.getMat().getIdRegistro());
+         pst.setInt(3, alu.getAluno().getCod());
+        
+         pst.setInt(4, alu.getFalta());
+         pst.setDouble(5, alu.getMediafinal());
+         pst.setDouble(6, alu.getNota1());
+         pst.setDouble(7, alu.getNota2());
+          pst.setDouble(8, alu.getNota3());
+         pst.setDouble(9, alu.getNota4());
+         pst.setString(10, alu.getBimestre());
+         pst.setString(11, alu.getSerie());
+                 
+            pst.executeUpdate();
+            
+            
+        } catch (SQLException ex) {
+            
+            JOptionPane.showMessageDialog(null, "nao cadastrou" +ex);
+        }finally{
+            desconecta();
+        }
+        
+        
+        
+    }
     
     
     
