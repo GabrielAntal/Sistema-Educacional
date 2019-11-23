@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Views.Professores;
+
 /**
  *
  * @author Willian
@@ -14,28 +16,51 @@ public class RegistroAlunoModel {
     private Disciplina disciplina;
     private Turma turma;
     private AlunosModel aluno;
-    private ProfessorModel professor;
-    private matricula mat;
+    private ProfissionalModel prof;
+    
+    private int cod;
     private int falta;
-    private double nota;
+    private double nota1;
+     private double nota2;
+     private double nota3;
+     private double nota4;
     private double mediafinal;
     private String bimestre;
-    private String serie;
+ 
 
-    public RegistroAlunoModel(Disciplina disciplina, Turma turma, AlunosModel aluno, ProfessorModel professor, matricula mat, int falta, double nota, double mediafinal, String bimestre, String serie) {
+    public RegistroAlunoModel() {
+    }
+
+    public RegistroAlunoModel(Disciplina disciplina, Turma turma, AlunosModel aluno, ProfissionalModel prof,  int falta, double nota1, double nota2, double nota3, double nota4, double mediafinal, String bimestre, int cod) {
         this.disciplina = disciplina;
         this.turma = turma;
         this.aluno = aluno;
-        this.professor = professor;
-        this.mat = mat;
+        this.prof = prof;
+     this.cod=cod;
         this.falta = falta;
-        this.nota = nota;
+        this.nota1 = nota1;
+        this.nota2 = nota2;
+        this.nota3 = nota3;
+        this.nota4 = nota4;
         this.mediafinal = mediafinal;
         this.bimestre = bimestre;
-        this.serie = serie;
+      
     }
 
-    public RegistroAlunoModel() {
+    public ProfissionalModel getProf() {
+        return prof;
+    }
+
+    public void setProf(ProfissionalModel prof) {
+        this.prof = prof;
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
     }
 
     public Disciplina getDisciplina() {
@@ -62,21 +87,15 @@ public class RegistroAlunoModel {
         this.aluno = aluno;
     }
 
-    public ProfessorModel getProfessor() {
-        return professor;
+    public ProfissionalModel getProfessor() {
+        return prof;
     }
 
-    public void setProfessor(ProfessorModel professor) {
-        this.professor = professor;
+    public void setProfessor(ProfissionalModel prof) {
+        this.prof = prof;
     }
 
-    public matricula getMat() {
-        return mat;
-    }
-
-    public void setMat(matricula mat) {
-        this.mat = mat;
-    }
+   
 
     public int getFalta() {
         return falta;
@@ -86,12 +105,36 @@ public class RegistroAlunoModel {
         this.falta = falta;
     }
 
-    public double getNota() {
-        return nota;
+    public double getNota1() {
+        return nota1;
     }
 
-    public void setNota(double nota) {
-        this.nota = nota;
+    public void setNota1(double nota1) {
+        this.nota1 = nota1;
+    }
+
+    public double getNota2() {
+        return nota2;
+    }
+
+    public void setNota2(double nota2) {
+        this.nota2 = nota2;
+    }
+
+    public double getNota3() {
+        return nota3;
+    }
+
+    public void setNota3(double nota3) {
+        this.nota3 = nota3;
+    }
+
+    public double getNota4() {
+        return nota4;
+    }
+
+    public void setNota4(double nota4) {
+        this.nota4 = nota4;
     }
 
     public double getMediafinal() {
@@ -110,14 +153,6 @@ public class RegistroAlunoModel {
         this.bimestre = bimestre;
     }
 
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-    
-    
+   
     
 }
