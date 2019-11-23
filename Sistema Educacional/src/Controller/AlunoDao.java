@@ -87,10 +87,12 @@ public class AlunoDao extends Conexao_bd  {
                 while(rs.next()){
 
                     AlunosModel a = new AlunosModel();
+                   // a.setCod(rs.getInt("cod_aluno"));
                     a.setNome(rs.getString("nome_aluno"));
                     a.setRg(rs.getString("rg_aluno")); 
                     a.setSobrenome(rs.getString("sobrenome")); 
                     a.setData(rs.getString("data_nasc"));
+                    a.setSexo(rs.getString("sexo"));
                   
                     listaa1.add(a);
 
