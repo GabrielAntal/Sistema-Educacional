@@ -8,11 +8,17 @@ package Views;
 
 
 import Controller.AlunoDao;
+import Controller.EscolarDao;
 
-import Controller.ControlAluno;
+
 
 import Model.AlunosModel;
 import Model.Conexao_bd;
+import Model.Disciplina;
+import Model.ProfissionalModel;
+import Model.RegistroAlunoModel;
+import Model.Sala;
+import Model.Turma;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
@@ -31,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.management.openmbean.SimpleType;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +49,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author Willian
  */
 public class Alunos extends javax.swing.JFrame {
-   AlunoDao a;
+ 
     /**
      * Creates new form Alunos
      */
@@ -51,15 +58,22 @@ public class Alunos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-    
     }
-     AlunoDao b = new AlunoDao();
+   
+      AlunoDao e = new AlunoDao();
 
+       AlunosModel a = new AlunosModel();
+       Conexao_bd c = new Conexao_bd();
+    
+    
+    
+    
+    
   
     public void CarregarTabela(String aluno){
       try{
         //AlunosModel b = new AlunosModel();
-         AlunoDao a = new AlunoDao(); 
+     
          
          
         
@@ -69,67 +83,90 @@ public class Alunos extends javax.swing.JFrame {
          jTable2.getColumnModel().getColumn(0);
            jTable2.getColumnModel().getColumn(1);
           jTable2.getColumnModel().getColumn(2);
-           jTable2.getColumnModel().getColumn(3);
+          jTable2.getColumnModel().getColumn(3);
+            jTable2.getColumnModel().getColumn(4);
+          // jTable2.getColumnModel().getColumn(5);
+            
            
-        
-      
-           
-           for( AlunosModel r : a.Listar(aluno)){
+           for( AlunosModel r : e.Listar(aluno)){
                modelo.addRow(new Object[]{
                 
                    r.getRg(),
                    r.getNome(),
                    r.getSobrenome(),
-                   r.getData()
+                   r.getData(),
+                   r.getSexo()
+                  // r.getCod()
+                       
+                   
+                  
                });
            }
            
                
                //modelo.addRow(a.selecionaAluno(al));
        } catch (Exception ex) {
-           Logger.getLogger(Alunos.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(null, ex);
        }
         
     }
     
      public void limparCampos(){
          
-         rg1.setText("");
-         nome2.setText("");
-         sobrenome1.setText("");
-         data1.setText("");
+         rgg.setText("");
+         nomegg.setText("");
+         sex.setText("");
+         rgg.setText("");
      }
      
     public void Salvar() {
-  
+
+            String nome = nomegg.getText();
+            String rg = rgg.getText();
+            String sobrenome2 = sobrenomegg.getText().trim();
+            String dataa =datagg.getText();
+            String s =sex.getText();
+
+          if(nome.length()>0&&rg.length()>0&&sobrenome2.length()>0&&dataa.length()>0){
+             a.setRg(rg);
+            a.setNome(nome);
+            a.setSexo(s);
+            a.setData(dataa);
+            a.setSobrenome(sobrenome2);
+          
+              e.InserirAluno(a);
+          //jButton5.setEnabled(true);
+           }
+            
+           else{
+                JOptionPane.showMessageDialog(null, "insira todos os campos");
+           }
 
 
-         String nome = nome2.getText();
-         String rg = rg1.getText();
-         String sobrenome2 = sobrenome1.getText().trim();
-         String dataa =data1.getText();
-         
-        
-        ControlAluno c = new ControlAluno();
-       
-        c.AlunoControl(nome, sobrenome2, rg,dataa);
-       jButton3.setEnabled(true);
-       
-   }
+      }
+
+   
+    
+    
     
     public void Tab(){
         int linha=0;
-  
-         String nome = nome2.getText();
-         String rg = rg1.getText();
-         String sobrenome2 = sobrenome1.getText();
-         String dataa=data1.getText().trim();
-         
+       
+         String nome = nomegg.getText();
+         String rg = rgg.getText();
+         String sobrenome2 = sobrenomegg.getText();
+         String dataa=datagg.getText().trim();
+         String sex= this.sex.getText();
+        
+     
+        
          if(nome.length()>0&&rg.length()>7&&sobrenome2.length()>0&&dataa.length()>0)
          jTable1.setValueAt(rg, linha, 0);
            jTable1.setValueAt(nome, linha, 1);
            jTable1.setValueAt(sobrenome2, linha, 2);
            jTable1.setValueAt(dataa, linha, 3);
+                 jTable1.setValueAt(sex, linha, 4);
+           
            linha+=1;
            
          
@@ -152,47 +189,21 @@ public class Alunos extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        sobrenome1 = new javax.swing.JTextField();
-        nome2 = new javax.swing.JTextField();
-        jPanel13 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        rg1 = new javax.swing.JFormattedTextField();
-        data1 = new javax.swing.JFormattedTextField();
-        jButton3 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        nome1 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        sobrenomedisc = new javax.swing.JTextField();
+        sex = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        saladisc = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        periododisc = new javax.swing.JTextField();
-        turmadisc = new javax.swing.JTextField();
-        rgdis = new javax.swing.JTextField();
-        jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        datadisc = new javax.swing.JTextField();
-        nomedisc = new javax.swing.JTextField();
+        nomegg = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton16 = new javax.swing.JButton();
+        rgg = new javax.swing.JFormattedTextField();
+        datagg = new javax.swing.JFormattedTextField();
+        sobrenomegg = new javax.swing.JTextField();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel8 = new javax.swing.JPanel();
@@ -221,15 +232,17 @@ public class Alunos extends javax.swing.JFrame {
         rgt = new javax.swing.JFormattedTextField();
         salvar1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jTextField17 = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jTextField18 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jSeparator10 = new javax.swing.JSeparator();
         jButton11 = new javax.swing.JButton();
@@ -239,13 +252,11 @@ public class Alunos extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jTextField28 = new javax.swing.JTextField();
         jTextField29 = new javax.swing.JTextField();
         jTextField30 = new javax.swing.JTextField();
-        jTextField31 = new javax.swing.JTextField();
         jTextField32 = new javax.swing.JTextField();
         jTextField33 = new javax.swing.JTextField();
         jTextField34 = new javax.swing.JTextField();
@@ -278,13 +289,20 @@ public class Alunos extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JSeparator();
         jSeparator16 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        jTextField55 = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         rgnotas = new javax.swing.JFormattedTextField();
         jLabel29 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
+        jTextField31 = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
+        jTextField56 = new javax.swing.JTextField();
+        jLabel46 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jTextField22 = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
@@ -301,6 +319,37 @@ public class Alunos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        nomematri = new javax.swing.JTextField();
+        datamatri = new javax.swing.JTextField();
+        sobrematri = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        sexomatri = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        rgmatri = new javax.swing.JFormattedTextField();
+        jPanel13 = new javax.swing.JPanel();
+        jTextField13 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jTextField20 = new javax.swing.JTextField();
+        jTextField21 = new javax.swing.JTextField();
+        jTextField58 = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        dis = new javax.swing.JTextField();
+        tur = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextField57 = new javax.swing.JTextField();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -313,64 +362,79 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jPanel1.setForeground(new java.awt.Color(0, 102, 102));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("RG");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 35, 30, 20));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, 848, -1));
+        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel14.setLayout(null);
+        jPanel14.add(sex);
+        sex.setBounds(420, 120, 170, 31);
 
-        jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 10, 160));
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 20));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("RG");
+        jPanel14.add(jLabel8);
+        jLabel8.setBounds(10, 30, 40, 31);
 
-        jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 10, 160));
+        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel39.setText("Sobrenome");
+        jPanel14.add(jLabel39);
+        jLabel39.setBounds(580, 30, 92, 31);
 
-        jPanel10.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel10.setEnabled(false);
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Sexo");
+        jPanel14.add(jLabel16);
+        jLabel16.setBounds(370, 120, 50, 31);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Sobrenome");
+        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel42.setText("Data de Nascimento");
+        jPanel14.add(jLabel42);
+        jLabel42.setBounds(10, 120, 130, 31);
+        jPanel14.add(nomegg);
+        nomegg.setBounds(340, 30, 180, 31);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Data Nascimento");
+        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel43.setText("Nome");
+        jPanel14.add(jLabel43);
+        jLabel43.setBounds(270, 30, 92, 31);
 
-        sobrenome1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sobrenome1ActionPerformed(evt);
-            }
-        });
+        try {
+            rgg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel14.add(rgg);
+        rgg.setBounds(50, 30, 170, 30);
 
-        nome2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nome2ActionPerformed(evt);
-            }
-        });
+        try {
+            datagg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel14.add(datagg);
+        datagg.setBounds(150, 120, 130, 30);
+        jPanel14.add(sobrenomegg);
+        sobrenomegg.setBounds(680, 30, 180, 31);
 
-        jPanel13.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(jPanel14);
+        jPanel14.setBounds(10, 10, 910, 210);
 
         jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTable1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable1.setForeground(new java.awt.Color(0, 102, 51));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "RG", "Nome", "Sobrenome", "Data Nascimento"
+                "RG", "Nome", "Sobrenome", "Data Nascimento", "Sexo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -382,202 +446,30 @@ public class Alunos extends javax.swing.JFrame {
                 jTable1MouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(9);
         }
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
+        jPanel2.add(jScrollPane6);
+        jScrollPane6.setBounds(50, 250, 780, 180);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Nome");
-
-        try {
-            rg1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        rg1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
-        try {
-            data1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/save_all.png"))); // NOI18N
-        jButton3.setText("Salvar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/save_all.png"))); // NOI18N
+        jButton5.setText("Salvar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
+        jPanel2.add(jButton5);
+        jButton5.setBounds(80, 460, 85, 27);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(rg1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(150, 150, 150)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(data1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(14, 14, 14)
-                        .addComponent(nome2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(170, 170, 170)
-                        .addComponent(jLabel5)
-                        .addGap(29, 29, 29)
-                        .addComponent(sobrenome1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(68, 68, 68))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rg1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(data1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nome2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sobrenome1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(90, 90, 90)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 510));
-
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 110, -1));
-
-        nome1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nome1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(nome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 200, 30));
-
-        jFormattedTextField1.setText("jFormattedTextField1");
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, -1, 40));
-
-        jFormattedTextField3.setText("jFormattedTextField3");
-        jPanel1.add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 180, -1, 90));
-
-        jTabbedPane1.addTab("Cadastrar Aluno", jPanel1);
-
-        jPanel2.setLayout(null);
-
-        jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel14.setLayout(null);
-        jPanel14.add(sobrenomedisc);
-        sobrenomedisc.setBounds(650, 30, 180, 31);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("RG");
-        jPanel14.add(jLabel8);
-        jLabel8.setBounds(20, 30, 40, 31);
-
-        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel39.setText("Sobrenome");
-        jPanel14.add(jLabel39);
-        jLabel39.setBounds(550, 30, 92, 31);
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel16.setText("Turma");
-        jPanel14.add(jLabel16);
-        jLabel16.setBounds(570, 270, 70, 31);
-
-        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel40.setText("Sala");
-        jPanel14.add(jLabel40);
-        jLabel40.setBounds(30, 270, 92, 31);
-        jPanel14.add(saladisc);
-        saladisc.setBounds(70, 270, 190, 31);
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel38.setText("Periodo");
-        jPanel14.add(jLabel38);
-        jLabel38.setBounds(320, 270, 92, 31);
-        jPanel14.add(periododisc);
-        periododisc.setBounds(390, 270, 140, 31);
-        jPanel14.add(turmadisc);
-        turmadisc.setBounds(630, 270, 150, 31);
-        jPanel14.add(rgdis);
-        rgdis.setBounds(50, 30, 190, 31);
-
-        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel41.setText("Disciplina");
-        jPanel14.add(jLabel41);
-        jLabel41.setBounds(20, 160, 92, 31);
-
-        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel42.setText("Data de Nascimento");
-        jPanel14.add(jLabel42);
-        jLabel42.setBounds(330, 150, 130, 31);
-        jPanel14.add(datadisc);
-        datadisc.setBounds(470, 150, 180, 31);
-        jPanel14.add(nomedisc);
-        nomedisc.setBounds(340, 30, 180, 31);
-
-        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel43.setText("Nome");
-        jPanel14.add(jLabel43);
-        jLabel43.setBounds(270, 30, 92, 31);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel14.add(jComboBox1);
-        jComboBox1.setBounds(90, 160, 130, 30);
-
-        jPanel2.add(jPanel14);
-        jPanel14.setBounds(20, 60, 910, 340);
-
-        jButton16.setText("Salvar");
-        jPanel2.add(jButton16);
-        jButton16.setBounds(90, 433, 110, 30);
-
-        jTabbedPane1.addTab("Cadastrar na Disciplina", jPanel2);
+        jTabbedPane1.addTab("Cadastrar Aluno", jPanel2);
 
         jPanel3.setLayout(null);
         jPanel3.add(jSeparator1);
@@ -776,13 +668,6 @@ public class Alunos extends javax.swing.JFrame {
 
         jPanel4.setLayout(null);
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel23.setText("RG do Aluno:");
-        jPanel4.add(jLabel23);
-        jLabel23.setBounds(60, 10, 160, 30);
-        jPanel4.add(jTextField17);
-        jTextField17.setBounds(50, 40, 210, 30);
-
         jButton8.setText("buscar");
         jPanel4.add(jButton8);
         jButton8.setBounds(280, 40, 80, 30);
@@ -819,7 +704,14 @@ public class Alunos extends javax.swing.JFrame {
         }
 
         jPanel7.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 30, 780, 280);
+        jScrollPane3.setBounds(20, 100, 780, 210);
+        jPanel7.add(jTextField17);
+        jTextField17.setBounds(110, 30, 90, 30);
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel23.setText("Nº Faltas");
+        jPanel7.add(jLabel23);
+        jLabel23.setBounds(20, 30, 100, 30);
 
         jPanel4.add(jPanel7);
         jPanel7.setBounds(30, 100, 840, 330);
@@ -831,6 +723,13 @@ public class Alunos extends javax.swing.JFrame {
         jButton10.setText("Salvar");
         jPanel4.add(jButton10);
         jButton10.setBounds(50, 450, 80, 30);
+        jPanel4.add(jTextField18);
+        jTextField18.setBounds(50, 40, 210, 30);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setText("RG do Aluno:");
+        jPanel4.add(jLabel24);
+        jLabel24.setBounds(60, 10, 160, 30);
 
         jTabbedPane1.addTab("Lançar Frequencias", jPanel4);
 
@@ -845,7 +744,7 @@ public class Alunos extends javax.swing.JFrame {
             }
         });
         jPanel5.add(jButton11);
-        jButton11.setBounds(810, 440, 100, 30);
+        jButton11.setBounds(50, 450, 100, 30);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setLayout(null);
@@ -875,11 +774,6 @@ public class Alunos extends javax.swing.JFrame {
         jPanel6.add(jLabel33);
         jLabel33.setBounds(290, 10, 90, 30);
 
-        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel34.setText("3º Bimestre");
-        jPanel6.add(jLabel34);
-        jLabel34.setBounds(410, 10, 90, 30);
-
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel35.setText("4º Bimestre");
         jPanel6.add(jLabel35);
@@ -901,8 +795,6 @@ public class Alunos extends javax.swing.JFrame {
         jTextField29.setBounds(280, 50, 80, 30);
         jPanel6.add(jTextField30);
         jTextField30.setBounds(410, 50, 80, 30);
-        jPanel6.add(jTextField31);
-        jTextField31.setBounds(540, 50, 80, 30);
         jPanel6.add(jTextField32);
         jTextField32.setBounds(10, 50, 110, 30);
         jPanel6.add(jTextField33);
@@ -975,22 +867,35 @@ public class Alunos extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(102, 204, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel41.setText("3º Bimestre");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(407, Short.MAX_VALUE)
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(279, 279, 279))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
+            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel6.add(jPanel11);
-        jPanel11.setBounds(0, 0, 780, 40);
+        jPanel11.setBounds(0, 10, 780, 30);
+        jPanel6.add(jTextField55);
+        jTextField55.setBounds(540, 50, 80, 30);
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel40.setText("3º Bimestre");
+        jPanel6.add(jLabel40);
+        jLabel40.setBounds(410, 10, 90, 30);
 
         jPanel5.add(jPanel6);
-        jPanel6.setBounds(20, 110, 780, 320);
+        jPanel6.setBounds(20, 130, 780, 90);
 
         jLabel45.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jPanel5.add(jLabel45);
@@ -1020,6 +925,9 @@ public class Alunos extends javax.swing.JFrame {
             }
         });
 
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel34.setText("Disciplina");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -1029,9 +937,13 @@ public class Alunos extends javax.swing.JFrame {
                 .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rgnotas, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(565, Short.MAX_VALUE))
+                .addGap(214, 214, 214))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1040,7 +952,9 @@ public class Alunos extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rgnotas, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1050,6 +964,13 @@ public class Alunos extends javax.swing.JFrame {
         jLabel44.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jPanel5.add(jLabel44);
         jLabel44.setBounds(70, 70, 140, 30);
+        jPanel5.add(jTextField56);
+        jTextField56.setBounds(550, 70, 80, 30);
+
+        jLabel46.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel46.setText("Cod aluno");
+        jPanel5.add(jLabel46);
+        jLabel46.setBounds(440, 70, 90, 30);
 
         jTabbedPane1.addTab("Lançar Notas", jPanel5);
 
@@ -1136,14 +1057,14 @@ public class Alunos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "RG", "Nome", "Sobrenome", "Data Nasc"
+                "RG", "Nome", "Sobrenome", "Data Nasc", "sexo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1160,10 +1081,11 @@ public class Alunos extends javax.swing.JFrame {
             jTable2.getColumnModel().getColumn(1).setResizable(false);
             jTable2.getColumnModel().getColumn(2).setResizable(false);
             jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jPanel15.add(jScrollPane2);
-        jScrollPane2.setBounds(70, 120, 770, 280);
+        jScrollPane2.setBounds(50, 120, 790, 280);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1179,6 +1101,196 @@ public class Alunos extends javax.swing.JFrame {
         jTextField1.setBounds(80, 40, 200, 30);
 
         jTabbedPane1.addTab("Consultar alunos", jPanel15);
+
+        jPanel1.setLayout(null);
+
+        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel10.setLayout(null);
+
+        nomematri.setEditable(false);
+        jPanel10.add(nomematri);
+        nomematri.setBounds(60, 80, 170, 30);
+
+        datamatri.setEditable(false);
+        jPanel10.add(datamatri);
+        datamatri.setBounds(360, 20, 160, 30);
+
+        sobrematri.setEditable(false);
+        jPanel10.add(sobrematri);
+        sobrematri.setBounds(360, 80, 170, 30);
+
+        jLabel2.setText("RG");
+        jPanel10.add(jLabel2);
+        jLabel2.setBounds(10, 20, 70, 30);
+
+        jLabel4.setText("Nome");
+        jPanel10.add(jLabel4);
+        jLabel4.setBounds(10, 80, 70, 30);
+
+        jLabel6.setText("Sobrenome");
+        jPanel10.add(jLabel6);
+        jLabel6.setBounds(270, 80, 70, 30);
+
+        sexomatri.setEditable(false);
+        jPanel10.add(sexomatri);
+        sexomatri.setBounds(630, 20, 140, 30);
+
+        jLabel7.setText("Sexo");
+        jPanel10.add(jLabel7);
+        jLabel7.setBounds(560, 20, 70, 30);
+
+        jLabel9.setText("Data Nascimento");
+        jPanel10.add(jLabel9);
+        jLabel9.setBounds(260, 20, 100, 30);
+
+        try {
+            rgmatri.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        rgmatri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rgmatriActionPerformed(evt);
+            }
+        });
+        rgmatri.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rgmatriKeyReleased(evt);
+            }
+        });
+        jPanel10.add(rgmatri);
+        rgmatri.setBounds(60, 20, 170, 30);
+
+        jPanel1.add(jPanel10);
+        jPanel10.setBounds(30, 40, 830, 160);
+
+        jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel13.setLayout(null);
+
+        jTextField13.setEditable(false);
+        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField13ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jTextField13);
+        jTextField13.setBounds(640, 20, 70, 30);
+
+        jLabel13.setText("Cod Aluno");
+        jPanel13.add(jLabel13);
+        jLabel13.setBounds(20, 70, 90, 30);
+
+        jLabel26.setText("COd Professor");
+        jPanel13.add(jLabel26);
+        jLabel26.setBounds(530, 20, 90, 30);
+
+        jLabel38.setText("Turma");
+        jPanel13.add(jLabel38);
+        jLabel38.setBounds(260, 20, 70, 30);
+
+        jTextField20.setEditable(false);
+        jTextField20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField20ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jTextField20);
+        jTextField20.setBounds(120, 70, 70, 30);
+
+        jTextField21.setEditable(false);
+        jPanel13.add(jTextField21);
+        jTextField21.setBounds(340, 20, 70, 30);
+
+        jTextField58.setEditable(false);
+        jTextField58.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField58KeyReleased(evt);
+            }
+        });
+        jPanel13.add(jTextField58);
+        jTextField58.setBounds(120, 20, 70, 30);
+
+        jLabel48.setText("Cod DIsciplina");
+        jPanel13.add(jLabel48);
+        jLabel48.setBounds(20, 20, 90, 30);
+
+        jPanel1.add(jPanel13);
+        jPanel13.setBounds(40, 270, 810, 150);
+
+        jLabel25.setText("Disciplina");
+        jPanel1.add(jLabel25);
+        jLabel25.setBounds(30, 220, 70, 30);
+
+        dis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disActionPerformed(evt);
+            }
+        });
+        dis.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                disKeyReleased(evt);
+            }
+        });
+        jPanel1.add(dis);
+        dis.setBounds(100, 220, 150, 30);
+
+        tur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turActionPerformed(evt);
+            }
+        });
+        tur.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                turKeyReleased(evt);
+            }
+        });
+        jPanel1.add(tur);
+        tur.setBounds(330, 220, 80, 30);
+
+        jLabel28.setText("Turma");
+        jPanel1.add(jLabel28);
+        jLabel28.setBounds(280, 220, 70, 30);
+
+        jButton1.setText("Editar");
+        jPanel1.add(jButton1);
+        jButton1.setBounds(420, 440, 110, 40);
+
+        jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(50, 440, 110, 40);
+
+        jTextField57.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField57ActionPerformed(evt);
+            }
+        });
+        jTextField57.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField57KeyReleased(evt);
+            }
+        });
+        jPanel1.add(jTextField57);
+        jTextField57.setBounds(520, 220, 170, 30);
+
+        jLabel47.setText("Professor");
+        jPanel1.add(jLabel47);
+        jLabel47.setBounds(450, 220, 70, 30);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("*Digite o RG , Disicplina, Turma e professor para matricular o aluno");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(50, 0, 460, 30);
+
+        jButton3.setText("Limpar");
+        jPanel1.add(jButton3);
+        jButton3.setBounds(250, 440, 110, 40);
+
+        jTabbedPane1.addTab("Matriculas", jPanel1);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/remover.png"))); // NOI18N
         jButton4.setText("Cancelar");
@@ -1211,220 +1323,330 @@ public class Alunos extends javax.swing.JFrame {
 
         setBounds(0, 0, 962, 622);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
-    private void datActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_datActionPerformed
  
-    private void buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaActionPerformed
-            
-    
-       try {
-            String nome =rgt.getText().trim();
-               ArrayList<AlunosModel> a =  b.ListarRG(nome);
-               
-           if(nome!=null){
-            for(AlunosModel d : b.ListarRG(nome)){
-                  rg3.setText(d.getRg());
-             nom1.setText(d.getNome());
-              sobrenome2.setText(d.getSobrenome());
-             dat.setText(d.getData());
-          }
-          }else  {
-           JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
-           }
-       } catch (Exception ex) {
-           JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
-       }
-        
-             edit.setEnabled(true);
-             limpa.setEnabled(true);
-             excluir.setEnabled(true);
-            salvar1.setEnabled(true);
-             
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+         dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    }//GEN-LAST:event_buscaActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+    private void jPanel15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel15KeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_jPanel15KeyReleased
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        CarregarTabela(jTextField1.getText());// TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-          String nome =rgnotas.getText().trim();
-                
-       ArrayList<AlunosModel> a =  b.ListarRG(nome);
-        
-        
-       
-           if(rgnotas.getText().length()>0){
-            for(AlunosModel d : b.ListarRG(nome)){
-                  jLabel44.setText(d.getNome());
-                  jLabel45.setText(d.getSobrenome());
-        
+        String nome =rgnotas.getText().trim();
+
+        ArrayList<AlunosModel> a =  e.ListarRG(nome);
+
+        if(rgnotas.getText().length()>0){
+            for(AlunosModel d : e.ListarRG(nome)){
+                jLabel44.setText(d.getNome());
+                jLabel45.setText(d.getSobrenome());
+
             }
-           }
-        
-        
+        }
+
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jTextField38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField38ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField38ActionPerformed
 
-    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField24ActionPerformed
-
     private void jTextField29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField29ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField29ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         String nome = nome2.getText();
-          Pattern pattern = Pattern.compile("[0123456789]");  
-	Matcher matcher = pattern.matcher(nome);  
-        if (matcher.find()) {  
-            JOptionPane.showMessageDialog(null, "Digite apenas letra", "aviso", JOptionPane.INFORMATION_MESSAGE);
+    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField24ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar1ActionPerformed
+        AlunoDao a = new AlunoDao();
+
+        String rg = rg3.getText().trim();
+        String nome =nom1.getText();
+        String sobrenome= sobrenome2.getText();
+        String data = dat.getText().trim();
+        String sexo = sex.getText();
+           AlunosModel b = new AlunosModel();
+          b.setRg(rg);
+          b.setNome(nome);
+          b.setSobrenome(sobrenome);
+          b.setData(data);
+          b.setSexo(sexo);
+          a.AlterarAluno(b);
+          
+                   
+       
+
+    
+
+   
+
+    }//GEN-LAST:event_salvar1ActionPerformed
+
+    private void rgtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rgtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rgtKeyReleased
+
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        String rg = rg3.getText().trim();
+        Conexao_bd c = new Conexao_bd();
+        int p  = JOptionPane.showConfirmDialog( null,"Deseja excluir ", "Exclusão",JOptionPane.YES_NO_OPTION);
+        if(p==JOptionPane.YES_OPTION){
+
+            e.ExcluirAluno(rg);
+
+            JOptionPane.showMessageDialog(null, "Aluno excluido com sucesso");
+
         }
-        else{
-          Salvar();
-              
-           Tab();
-            limparCampos(); 
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void sobrenome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobrenome1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sobrenome1ActionPerformed
-
-    private void sobrenome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobrenome2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sobrenome2ActionPerformed
-
-    private void nome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nome1ActionPerformed
-
-    private void nome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nome2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nome2ActionPerformed
-
-    private void jPanel15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel15KeyReleased
-            // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel15KeyReleased
-
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-          CarregarTabela(jTextField1.getText());// TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1KeyReleased
+    }//GEN-LAST:event_excluirActionPerformed
 
     private void limpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpaActionPerformed
-           rg3.setText("");
-             nom1.setText("");
-              sobrenome2.setText("");
-             dat.setText("");    // TODO add your handling code here:
+        rg3.setText("");
+        nom1.setText("");
+        sobrenome2.setText("");
+        dat.setText("");    // TODO add your handling code here:
     }//GEN-LAST:event_limpaActionPerformed
 
-    private void nom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom1ActionPerformed
-       
-    }//GEN-LAST:event_nom1ActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        rg3.setEditable(true);
+        nom1.setEditable(true);
+        sobrenome2.setEditable(true);
+        dat.setEditable(true);
 
-    private void rg3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rg3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rg3ActionPerformed
+        rg3.requestFocus();
+    }//GEN-LAST:event_editActionPerformed
+
+    private void buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaActionPerformed
+
+        try {
+            String nome =rgt.getText().trim();
+            ArrayList<AlunosModel> a =  e.ListarRG(nome);
+
+            if(nome!=null){
+                for(AlunosModel d : e.ListarRG(nome)){
+                    rg3.setText(d.getRg());
+                    nom1.setText(d.getNome());
+                    sobrenome2.setText(d.getSobrenome());
+                    dat.setText(d.getData());
+                }
+            }else  {
+                JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "insira o RG do aluno", "aviso", JOptionPane.ERROR_MESSAGE);
+        }
+
+        edit.setEnabled(true);
+        limpa.setEnabled(true);
+        excluir.setEnabled(true);
+        salvar1.setEnabled(true);
+
+    }//GEN-LAST:event_buscaActionPerformed
 
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField16ActionPerformed
 
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        rg3.setEditable(true);
-             nom1.setEditable(true);
-              sobrenome2.setEditable(true);
-             dat.setEditable(true);
-            
-          rg3.requestFocus();
-    }//GEN-LAST:event_editActionPerformed
-
-    private void salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar1ActionPerformed
-          AlunoDao a = new AlunoDao();
-                                             
-          String rg = rg3.getText().trim();
-         String nome =nom1.getText();
-         String sobrenome= sobrenome2.getText();
-         String data = dat.getText().trim();
-            
-          
-              AlunosModel b = new AlunosModel(nome, sobrenome, rg,data);
-          
-          a.AlterarAluno(b);
-           
-        
-        
-        
-    }//GEN-LAST:event_salvar1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void rg3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rg3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_rg3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void nom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom1ActionPerformed
+
+    }//GEN-LAST:event_nom1ActionPerformed
+
+    private void sobrenome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobrenome2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sobrenome2ActionPerformed
+
+    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField12ActionPerformed
+
+    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField11ActionPerformed
+
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void datActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_datActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Salvar();   
+        Tab();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-     
-          DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
-          int index = jTable1.getSelectedRow();
-       if(evt.getClickCount()==2){
-           jTabbedPane1.setSelectedIndex(1);
-          rgdis.setText(modelo.getValueAt(index, 0).toString());
-          nomedisc.setText(modelo.getValueAt(index, 1).toString());
-          sobrenomedisc.setText(modelo.getValueAt(index, 2).toString());
-          datadisc.setText(modelo.getValueAt(index, 3).toString());
-       }   
-          
-           
+ 
+        
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+        int index = jTable1.getSelectedRow();
+       
+        if(evt.getClickCount()==2){
+        
+        jTabbedPane1.setSelectedIndex(1);
+        rgmatri.setText(modelo.getValueAt(index, 0).toString());
+        nomematri.setText(modelo.getValueAt(index, 1).toString());
+        sobrematri.setText(modelo.getValueAt(index, 2).toString());
+        datamatri.setText(modelo.getValueAt(index, 3).toString());
+        sexomatri.setText(modelo.getValueAt(index, 4).toString());
+        //codmatri.setText(modelo.getValueAt(index, 5).toString());
+        //PerfilAlt.setEditable(false);
+        jTabbedPane1.setSelectedComponent(jPanel1);
+        }
+        
         
         
         
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
-              String rg = rg3.getText().trim();
+    private void disActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_disActionPerformed
+
+    private void turActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_turActionPerformed
+
+    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField13ActionPerformed
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+      
+    }//GEN-LAST:event_jTable1KeyReleased
+
+    private void jTextField57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField57ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField57ActionPerformed
+
+    private void jTextField58KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField58KeyReleased
+     
+    }//GEN-LAST:event_jTextField58KeyReleased
+
+    private void disKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_disKeyReleased
+         EscolarDao f = new EscolarDao();
+     
+        if(dis.getText().length()>0){
+          for(Disciplina d : f.BuscarCodDisc(dis.getText())){
+                    jTextField58.setText(Integer.toString(d.getCod()));
+          }}else{
+            jTextField58.setText(" ");
+        }
+            
+    }//GEN-LAST:event_disKeyReleased
+
+    private void turKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_turKeyReleased
+          EscolarDao f = new EscolarDao();
+     
+        if(tur.getText().length()>0){
+          for(Turma d : f.BuscarCodTurma(tur.getText())){
+                    jTextField21.setText(d.getTurma_tipo());
+          }}else{
+            jTextField21.setText(" ");
+        }
+    }//GEN-LAST:event_turKeyReleased
+
+    private void jTextField57KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField57KeyReleased
+         EscolarDao f = new EscolarDao();
+     
+        if(jTextField57.getText().length()>0){
+          for(ProfissionalModel d : f.BuscarCodProf(jTextField57.getText())){
+                    jTextField13.setText(Integer.toString(d.getCod()));
+          }}else{
+            jTextField13.setText(" ");
+        }
+    }//GEN-LAST:event_jTextField57KeyReleased
+
+    private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
+       
+    }//GEN-LAST:event_jTextField20ActionPerformed
+
+    private void rgmatriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rgmatriActionPerformed
+           EscolarDao f = new EscolarDao();
+     
+        if(rgmatri.getText().length()>0){
+          for(AlunosModel d : f.BuscarCodAluno(rgmatri.getText())){
+                    jTextField20.setText(Integer.toString(d.getCod()));
+                    datamatri.setText(d.getData());
+                    nomematri.setText(d.getNome());
+                    sobrematri.setText(d.getSobrenome());
+                    sexomatri.setText(d.getSexo());
+          }}else{
+            jTextField13.setText(" ");
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_rgmatriActionPerformed
+
+    private void rgmatriKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rgmatriKeyReleased
+          EscolarDao f = new EscolarDao();
+     
+        if(rgmatri.getText().length()>0){
+          for(AlunosModel d : f.BuscarCodAluno(rgmatri.getText())){
+                    jTextField20.setText(Integer.toString(d.getCod()));
+                    datamatri.setText(d.getData());
+                    nomematri.setText(d.getNome());
+                    sobrematri.setText(d.getSobrenome());
+                    sexomatri.setText(d.getSexo());
+          }}else{
+            jTextField13.setText(" ");
+        } // TODO ad
         
-        int p  = JOptionPane.showConfirmDialog( null,"Deseja excluir ", "Exclusão",JOptionPane.YES_NO_OPTION);
-                if(p==JOptionPane.YES_OPTION){
-                      
-                      b.ExcluirAluno(rg);
-                     JOptionPane.showMessageDialog(null, "Aluno excluido com sucesso");
+    }//GEN-LAST:event_rgmatriKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       int  disciplina = Integer.parseInt(jTextField58.getText());
+        int  aluno = Integer.parseInt(jTextField20.getText());
         
-                }
+        
+    String turma = jTextField21.getText();
+    int professor= Integer.parseInt(jTextField13.getText());
+    
+    AlunosModel a = new AlunosModel();
+    Disciplina d = new Disciplina();
+    Turma t = new Turma();
+    ProfissionalModel p = new ProfissionalModel();
+     RegistroAlunoModel r = new RegistroAlunoModel();
+    a.setCod(aluno);
+    d.setCod(disciplina);
+    t.setTurma_tipo(turma);
+     p.setCod(professor);
+  
+     r.setAluno(a);
+     r.setProfessor(p);
+     r.setTurma(t);
+     r.setDisciplina(d);
+      
+    
+    EscolarDao u = new EscolarDao();
+    u.InserirResgistro(r);
       
         
         
-              // TODO add your handling code here:
-    }//GEN-LAST:event_excluirActionPerformed
-
-    private void rgtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rgtKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rgtKeyReleased
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1467,28 +1689,27 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JTextField dat;
-    public static javax.swing.JFormattedTextField data1;
-    private javax.swing.JTextField datadisc;
+    public javax.swing.JFormattedTextField datagg;
+    private javax.swing.JTextField datamatri;
+    private javax.swing.JTextField dis;
     private javax.swing.JButton edit;
     private javax.swing.JButton excluir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    public javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    public javax.swing.JButton jButton5;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -1499,7 +1720,11 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
@@ -1512,23 +1737,29 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel10;
+    private javax.swing.JLabel jLabel9;
+    public javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1536,11 +1767,11 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -1549,10 +1780,6 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     public javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
@@ -1563,8 +1790,12 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField jTextField18;
+    private javax.swing.JTextField jTextField20;
+    private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
@@ -1598,23 +1829,26 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField52;
     private javax.swing.JTextField jTextField53;
     private javax.swing.JTextField jTextField54;
+    private javax.swing.JTextField jTextField55;
+    private javax.swing.JTextField jTextField56;
+    private javax.swing.JTextField jTextField57;
+    private javax.swing.JTextField jTextField58;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton limpa;
     private javax.swing.JTextField nom1;
-    private javax.swing.JTextField nome1;
-    public javax.swing.JTextField nome2;
-    private javax.swing.JTextField nomedisc;
-    private javax.swing.JTextField periododisc;
-    public static javax.swing.JFormattedTextField rg1;
+    public javax.swing.JTextField nomegg;
+    private javax.swing.JTextField nomematri;
     public javax.swing.JTextField rg3;
-    private javax.swing.JTextField rgdis;
+    public javax.swing.JFormattedTextField rgg;
+    private javax.swing.JFormattedTextField rgmatri;
     private javax.swing.JFormattedTextField rgnotas;
     private javax.swing.JFormattedTextField rgt;
-    private javax.swing.JTextField saladisc;
     private javax.swing.JButton salvar1;
-    public javax.swing.JTextField sobrenome1;
+    public javax.swing.JTextField sex;
+    private javax.swing.JTextField sexomatri;
+    private javax.swing.JTextField sobrematri;
     private javax.swing.JTextField sobrenome2;
-    private javax.swing.JTextField sobrenomedisc;
-    private javax.swing.JTextField turmadisc;
+    public javax.swing.JTextField sobrenomegg;
+    private javax.swing.JTextField tur;
     // End of variables declaration//GEN-END:variables
 }
