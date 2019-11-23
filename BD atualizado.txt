@@ -15,10 +15,10 @@ CREATE SEQUENCE public.profissional_cod_prof_seq;
 CREATE TABLE public.Profissional (
                 cod_prof INTEGER NOT NULL DEFAULT nextval('public.profissional_cod_prof_seq'),
                 Nome_prof VARCHAR,
-                senha VARCHAR,
                 cpf VARCHAR NOT NULL,
-                perfil VARCHAR,
+                senha VARCHAR,
                 login VARCHAR,
+                perfil VARCHAR,
                 CONSTRAINT profissional_pk PRIMARY KEY (cod_prof)
 );
 
