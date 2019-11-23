@@ -36,9 +36,7 @@ public class Professores extends javax.swing.JFrame {
     private Object PerfilActionPerformed;
    
     
-    /**
-     * Creates new form Professores
-     */
+    
     public Professores() {
         this.prof = new ProfessorModel(nome, cpf, login, senha, perfil);
       
@@ -46,9 +44,20 @@ public class Professores extends javax.swing.JFrame {
         setLocationRelativeTo(null);
          c.conecta();
         // this.PreenchePerfil();
+         editar_nao();
     }
     
     
+    
+    
+    public void editar_nao(){
+         NomeAlt.setEditable(false);
+         CPFAlt.setEditable(false);
+         LoginAlt.setEditable(false);
+         SenhaAlt.setEditable(false);
+         PerfilAlt.setEditable(false);
+         jComboBox2.setEnabled(false);
+    }
     
     
     public void listar(String list){
@@ -185,6 +194,7 @@ public class Professores extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox();
         PerfilAlt = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dados do Professor");
@@ -432,6 +442,13 @@ public class Professores extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setText("Limpar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -441,8 +458,6 @@ public class Professores extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SenhaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LoginAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,16 +466,24 @@ public class Professores extends javax.swing.JFrame {
                             .addComponent(CPFAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(NomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(PerfilAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SenhaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(PerfilAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(79, 79, 79)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(26, 26, 26))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -478,10 +501,13 @@ public class Professores extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LoginAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SenhaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SenhaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,6 +607,7 @@ public class Professores extends javax.swing.JFrame {
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         String procura = jTextField1.getText();
         listar(procura);
+        
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -604,7 +631,7 @@ public class Professores extends javax.swing.JFrame {
     }//GEN-LAST:event_SenhaAltActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -616,10 +643,34 @@ public class Professores extends javax.swing.JFrame {
        String senha = SenhaAlt.getText();
        String perfil = ((String) jComboBox2.getSelectedItem());
        
+       ProfessorModel prof = new ProfessorModel(nome, cpf, login, senha, perfil);
+       
+       profissional.Atualizar_Profissional(prof);
+       NomeAlt.setText("");
+       CPFAlt.setText("");
+       LoginAlt.setText("");
+       SenhaAlt.setText("");
+       PerfilAlt.setText("");
+       editar_nao();
+       
+       
+       
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        ProfissionalDao profissional = new ProfissionalDao();
+        String cpf = CPFAlt.getText();
+        int confirmation = JOptionPane.showConfirmDialog(null, "Deseja excluir?", "Exclusão",JOptionPane.YES_NO_OPTION );
+        
+        if(confirmation == JOptionPane.YES_OPTION){
+            profissional.Excluir_Profissional(cpf);
+            NomeAlt.setText("");
+            CPFAlt.setText("");
+            LoginAlt.setText("");
+            SenhaAlt.setText("");
+            PerfilAlt.setText("");
+            editar_nao();
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -634,13 +685,23 @@ public class Professores extends javax.swing.JFrame {
         if(evt.getClickCount()==2){
         
         jTabbedPane5.setSelectedIndex(1);
+        
         NomeAlt.setText(modelo.getValueAt(index, 0).toString());
         CPFAlt.setText(modelo.getValueAt(index, 1).toString());
         LoginAlt.setText(modelo.getValueAt(index, 2).toString());
         SenhaAlt.setText(modelo.getValueAt(index, 3).toString());
         PerfilAlt.setText(modelo.getValueAt(index, 4).toString());
-        PerfilAlt.setEditable(false);
+        NomeAlt.setEditable(true);
+         CPFAlt.setEditable(true);
+         LoginAlt.setEditable(true);
+         SenhaAlt.setEditable(true);
+         jComboBox2.setEnabled(true);
+         PerfilAlt.setEnabled(false);
         jTabbedPane5.setSelectedComponent(jPanel5);
+        jTextField1.setText("");
+        ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
+        
+      
         
         
         
@@ -651,6 +712,15 @@ public class Professores extends javax.swing.JFrame {
     private void PerfilAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilAltActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PerfilAltActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+            NomeAlt.setText("");
+            CPFAlt.setText("");
+            LoginAlt.setText("");
+            SenhaAlt.setText("");
+            PerfilAlt.setText("");
+            editar_nao();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -699,6 +769,7 @@ public class Professores extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
