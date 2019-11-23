@@ -2,7 +2,9 @@
 package Controller;
 
 import Model.Conexao_bd;
-import Model.ProfessorModel;
+import Model.ProfissionalModel;
+import Views.Professores;
+
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,17 +25,17 @@ public class ProfissionalDao extends Conexao_bd{
     
     
     
-    public void Inserir_Profissional (ProfessorModel prof ){
+    public void Inserir_Profissional (ProfissionalModel prof ){
         conecta();
         
         try {
-            PreparedStatement pst = conexao.prepareStatement("INSERT INTO PROFISSIONAL(nome_prof, cpf, login, senha, perfil)"
-                    + " values(?,?,?,?,?); ");
-                //    pst.setString(1, prof.getNome());
-                  //  pst.setString(2, prof.getCpf());
-                    //pst.setString(3, prof.getLogin());
-                    //pst.setString(4, prof.getSenha());
-                    //pst.setString(5, prof.getPerfil());
+            PreparedStatement pst = conexao.prepareStatement("INSERT INTO PROFISSIONAL(cod_prof,nome_prof, cpf, login, senha, perfil)"
+                    + " values(default,?,?,?,?,?); ");
+                   pst.setString(1, prof.getNome());
+                  pst.setString(2, prof.getCpf());
+                   pst.setString(3, prof.getLogin());
+                    pst.setString(4, prof.getSenha());
+                    pst.setString(5, prof.getPerfil());
                     pst.execute();
                     JOptionPane.showMessageDialog(null, "Cadastrado!"); 
                     pst.close();
@@ -44,22 +46,23 @@ public class ProfissionalDao extends Conexao_bd{
          
     } 
         
-        public ArrayList<ProfessorModel> mostrar_prof(String nomeProf){
+        public ArrayList<ProfissionalModel> mostrar_prof(String nomeProf){
             
-            ArrayList<ProfessorModel> list = new ArrayList<>();
+            ArrayList<ProfissionalModel> list = new ArrayList<>();
             conecta();
          
             try {
                 pst = conexao.prepareStatement("Select * from profissional where nome_prof ilike'"+ 
                         nomeProf+"%'");
                 rs =pst.executeQuery();
-                ProfessorModel profissional = new ProfessorModel();
+                ProfissionalModel profissional = new ProfissionalModel();
                 while(rs.next()){
+                     profissional.setCod(rs.getInt("cod_prof"));
                     profissional.setNome(rs.getString("nome_prof"));
                     profissional.setCpf(rs.getString("cpf"));
-                //    profissional.setLogin(rs.getString("login"));
-                  //  profissional.setSenha(rs.getString("senha"));
-                    //profissional.setPerfil(rs.getString("perfil"));
+                  profissional.setLogin(rs.getString("login"));
+                   profissional.setSenha(rs.getString("senha"));
+                    profissional.setPerfil(rs.getString("perfil"));
                     
                     list.add(profissional);
                 }
