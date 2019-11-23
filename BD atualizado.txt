@@ -10,27 +10,20 @@ CREATE TABLE public.sala (
 
 ALTER SEQUENCE public.sala_id_sala_seq_1 OWNED BY public.sala.id_sala;
 
-CREATE SEQUENCE public.profissional_id_prof_seq;
+CREATE SEQUENCE public.profissional_cod_prof_seq;
 
-CREATE TABLE public.profissional (
-                id_prof VARCHAR NOT NULL DEFAULT nextval('public.profissional_id_prof_seq'),
-                login VARCHAR NOT NULL,
-                perfil VARCHAR NOT NULL,
-                senha VARCHAR NOT NULL,
-                CONSTRAINT profi_pk PRIMARY KEY (id_prof)
-);
-
-
-ALTER SEQUENCE public.profissional_id_prof_seq OWNED BY public.profissional.id_prof;
-
-CREATE TABLE public.Professor (
-                id_prof INTEGER NOT NULL,
-                Nome_professor VARCHAR NOT NULL,
+CREATE TABLE public.Profissional (
+                cod_prof INTEGER NOT NULL DEFAULT nextval('public.profissional_cod_prof_seq'),
+                Nome_prof VARCHAR,
+                senha VARCHAR,
                 cpf VARCHAR NOT NULL,
-                sobrenome VARCHAR NOT NULL,
-                CONSTRAINT professor_pk PRIMARY KEY (id_prof)
+                perfil VARCHAR,
+                login VARCHAR,
+                CONSTRAINT profissional_pk PRIMARY KEY (cod_prof)
 );
 
+
+ALTER SEQUENCE public.profissional_cod_prof_seq OWNED BY public.Profissional.cod_prof;
 
 CREATE SEQUENCE public.disicplina_iddisc_seq;
 
@@ -102,7 +95,7 @@ CREATE TABLE public.Turma_disc (
                 turma_pk VARCHAR NOT NULL,
                 idReg INTEGER NOT NULL,
                 cod_aluno INTEGER NOT NULL,
-                id_prof INTEGER NOT NULL,
+                cod_prof INTEGER NOT NULL,
                 idpk INTEGER NOT NULL DEFAULT nextval('public.turma_disc_idpk_seq'),
                 falta INTEGER,
                 media_final DOUBLE PRECISION,
@@ -110,7 +103,7 @@ CREATE TABLE public.Turma_disc (
                 bimestre VARCHAR,
                 idTurmaDisc INTEGER NOT NULL DEFAULT nextval('public.turma_disc_idturmadisc_seq'),
                 serie VARCHAR,
-                CONSTRAINT tur_disc_pk PRIMARY KEY (idDisc, turma_pk, idReg, cod_aluno, id_prof, idpk)
+                CONSTRAINT tur_disc_pk PRIMARY KEY (idDisc, turma_pk, idReg, cod_aluno, cod_prof, idpk)
 );
 
 
@@ -126,8 +119,8 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.Turma_disc ADD CONSTRAINT professor_turma_disc_fk
-FOREIGN KEY (id_prof)
-REFERENCES public.Professor (id_prof)
+FOREIGN KEY (cod_prof)
+REFERENCES public.Profissional (cod_prof)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
