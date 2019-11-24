@@ -20,18 +20,18 @@ public class RegistroAlunoModel {
     
     private int cod;
     private int falta;
-    private double nota1;
-     private double nota2;
-     private double nota3;
-     private double nota4;
-    private double mediafinal;
-    private String bimestre;
+    private float nota1;
+     private float nota2;
+     private float nota3;
+     private float nota4;
+    private float mediafinal;
+    
  
 
     public RegistroAlunoModel() {
     }
 
-    public RegistroAlunoModel(Disciplina disciplina, Turma turma, AlunosModel aluno, ProfissionalModel prof,  int falta, double nota1, double nota2, double nota3, double nota4, double mediafinal, String bimestre, int cod) {
+    public RegistroAlunoModel(Disciplina disciplina, Turma turma, AlunosModel aluno, ProfissionalModel prof,  int falta, float nota1, float nota2, float nota3, float nota4, float mediafinal, int cod) {
         this.disciplina = disciplina;
         this.turma = turma;
         this.aluno = aluno;
@@ -43,7 +43,7 @@ public class RegistroAlunoModel {
         this.nota3 = nota3;
         this.nota4 = nota4;
         this.mediafinal = mediafinal;
-        this.bimestre = bimestre;
+       
       
     }
 
@@ -105,54 +105,47 @@ public class RegistroAlunoModel {
         this.falta = falta;
     }
 
-    public double getNota1() {
+    public float getNota1() {
         return nota1;
     }
 
-    public void setNota1(double nota1) {
+    public void setNota1(float nota1) {
         this.nota1 = nota1;
     }
 
-    public double getNota2() {
+    public float getNota2() {
         return nota2;
     }
 
-    public void setNota2(double nota2) {
+    public void setNota2(float nota2) {
         this.nota2 = nota2;
     }
 
-    public double getNota3() {
+    public float getNota3() {
         return nota3;
     }
 
-    public void setNota3(double nota3) {
+    public void setNota3(float nota3) {
         this.nota3 = nota3;
     }
 
-    public double getNota4() {
+    public float getNota4() {
         return nota4;
     }
 
-    public void setNota4(double nota4) {
+    public void setNota4(float nota4) {
         this.nota4 = nota4;
     }
 
-    public double getMediafinal() {
+    public float getMediafinal() {
         return mediafinal;
     }
 
-    public void setMediafinal(double mediafinal) {
+    public void setMediafinal(float mediafinal) {
         this.mediafinal = mediafinal;
     }
 
-    public String getBimestre() {
-        return bimestre;
-    }
-
-    public void setBimestre(String bimestre) {
-        this.bimestre = bimestre;
-    }
-
+    
    
     
 }
