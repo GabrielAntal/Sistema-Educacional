@@ -13,6 +13,7 @@ import Model.ProfissionalModel;
 import Model.RegistroAlunoModel;
 import Model.Sala;
 import Model.Turma;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -128,8 +129,8 @@ public class EscolarDao extends Conexao_bd {
                 
                 
                 
-      PreparedStatement pst= conexao.prepareStatement("insert into turma_disc(idpk,turma_pk,cod_aluno,iddisc, cod_prof,falta,media_final,nota1,nota2,nota3,nota4,bimestre) "
-              + "values(default,?,?,?,?,?,?,?,?,?,?,?)");
+      PreparedStatement pst= conexao.prepareStatement("insert into turma_disc(idpk,turma_pk,cod_aluno,iddisc, cod_prof,falta,media_final,bimestre_1º,bimestre_2º,bimestre_3º,bimestre_4º) "
+              + "values(default,?,?,?,?,?,?,?,?,?,?)");
       
         pst.setString(1, alu.getTurma().getTurma_tipo());
        
@@ -142,8 +143,8 @@ public class EscolarDao extends Conexao_bd {
          pst.setDouble(8, alu.getNota2());
           pst.setDouble(9, alu.getNota3());
          pst.setDouble(10, alu.getNota4());
-         pst.setString(11, alu.getBimestre());
-        // pst.setString(10, alu.getSerie());
+      
+ 
                  
             pst.executeUpdate();
             
@@ -160,7 +161,7 @@ public class EscolarDao extends Conexao_bd {
        conecta();
             ArrayList<Disciplina> listaa1= new ArrayList<>();
         try {
-            pst = conexao.prepareStatement("select iddisc from disicplina where nome_disc ilike'"+
+            pst = conexao.prepareStatement("select iddisc,nome_disc from disicplina where nome_disc ilike'"+
                     nome+ "%'");
             rs =pst.executeQuery();
             
@@ -169,6 +170,7 @@ public class EscolarDao extends Conexao_bd {
                 Disciplina a = new Disciplina();
                   
                     a.setCod(rs.getInt("iddisc"));
+                    a.setNome(rs.getString("nome_disc"));
                   
                   
                     listaa1.add(a);
@@ -289,25 +291,144 @@ public class EscolarDao extends Conexao_bd {
         }
         
         
+         public ArrayList<RegistroAlunoModel> BuscarCodREgistro(String reg){
+       conecta();
+            ArrayList<RegistroAlunoModel> listaa1= new ArrayList<>();
+        try {
+            pst = conexao.prepareStatement("select  cod_aluno, idpk from aluno natural join turma_disc where nome_aluno ilike'"+
+                    reg+ "%'");
+            rs =pst.executeQuery();
+            
+            while(rs.next()){
+
+              RegistroAlunoModel a = new RegistroAlunoModel();
+              
+              AlunosModel b = new AlunosModel();
+             
+              
+              b.setCod(rs.getInt("cod_aluno"));
+                   a.setAluno(b);
+                   a.setCod(rs.getInt("idpk"));
+                    listaa1.add(a);
+
+            }
+            
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(EscolarDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return listaa1;
+            
+            
+            
+            
+        }
+        
+        
+       /*  public ArrayList<Disciplina> BuscarCodDisc(String registro){
+       conecta();
+            ArrayList<Disciplina> listaa1 = new ArrayList<>();
+        try {
+            pst = conexao.prepareStatement("select iddisc from disicplina where nome_disc ilike'"+
+                    registro+ "%'");
+            rs =pst.executeQuery();
+            
+            while(rs.next()){
+
+              RegistroAlunoModel a = new RegistroAlunoModel();
+              
+              AlunosModel b = new AlunosModel();
+             
+              
+              b.setCod(rs.getInt("cod_aluno"));
+                   a.setAluno(b);
+                   a.setCod(rs.getInt("idpk"));
+                    listaa1.add(a);
+
+            }
+            
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(EscolarDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return listaa1;
+            
+            
+            
+            
+        }
+        */
+         
+         public void InserirFaltas(RegistroAlunoModel reg, int id){
+             conecta();
+               try {
+               pst = conexao.prepareStatement("update turma_disc set falta =? where idpk ='"+id+"'" );
+              
+                pst.setInt(1, reg.getFalta());
+         
+                pst.executeUpdate();
+                pst.close();
+                     JOptionPane.showMessageDialog(null,"Alterado com sucesso" );
+                desconecta();
+            } catch (SQLException e) {
+                
+                JOptionPane.showMessageDialog(null,"erro no AlterarAluno" +e);
+            }
+            
+           
+         }
+        
+           
+        public  void InserirNotas(RegistroAlunoModel reg, int id){
+            conecta();
+            try {
+               pst = conexao.prepareStatement("update turma_disc set bimestre_1º =?,  bimestre_2º=?, bimestre_3º=? , bimestre_4º=?, media_final=? where idpk ='"+id+"'" );
+              
+                pst.setFloat(1, reg.getNota1());
+          
+                 pst.setFloat(2, reg.getNota2());
+                   pst.setFloat(3, reg.getNota3());
+                  pst.setFloat(4, reg.getNota4());
+                    pst.setFloat(5, reg.getMediafinal());
+                pst.executeUpdate();
+                pst.close();
+                     JOptionPane.showMessageDialog(null,"Alterado com sucesso" );
+                desconecta();
+            } catch (SQLException e) {
+                
+                JOptionPane.showMessageDialog(null,"erro no AlterarAluno" +e);
+            }
+            
+        }
+        
+        
+        public ResultSet BuscarU(RegistroAlunoModel r, Disciplina d){
+            try{
+          conecta();
+                String sql = "select nome_disc, falta from tumra_disc natural join disicplina where idpk = '"+r.getCod()+"' and iddisc= '"+d.getCod()+"'";
+            stmt.executeQuery(sql);
+            rs = stmt.getResultSet();
+                                
+            
+            return rs;                           
+                    }
+                catch(SQLException e){          
+                    JOptionPane.showMessageDialog(null, "Erro ");
+                    return null;
+                }    
+            
+            
+            
         
         
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
+        }
         
     }
     
