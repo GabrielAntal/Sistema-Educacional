@@ -81,9 +81,12 @@ CREATE TABLE public.Turma_disc (
                 cod_prof INTEGER NOT NULL,
                 falta INTEGER,
                 media_final DOUBLE PRECISION,
-                nota DOUBLE PRECISION,
-                bimestre VARCHAR,
-                serie VARCHAR,
+                bimestre_1º  DOUBLE PRECISION,
+                  bimestre_2º  DOUBLE PRECISION,
+              bimestre_3º  DOUBLE PRECISION,
+             bimestre_4º  DOUBLE PRECISION,
+              
+             
                 CONSTRAINT tur_disc_pk PRIMARY KEY (idDisc, turma_pk, idpk, cod_aluno, cod_prof)
 );
 
