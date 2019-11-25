@@ -1,15 +1,4 @@
 
-CREATE SEQUENCE public.sala_id_sala_seq_1;
-
-CREATE TABLE public.sala (
-                id_sala INTEGER NOT NULL DEFAULT nextval('public.sala_id_sala_seq_1'),
-                nome_sala VARCHAR,
-                CONSTRAINT sala_pk PRIMARY KEY (id_sala)
-);
-
-
-ALTER SEQUENCE public.sala_id_sala_seq_1 OWNED BY public.sala.id_sala;
-
 CREATE SEQUENCE public.profissional_cod_prof_seq_1_1;
 
 CREATE TABLE public.Profissional (
@@ -32,14 +21,25 @@ CREATE TABLE public.Turma (
 );
 
 
+CREATE SEQUENCE public.sala_id_sala_seq_1_1;
+
+CREATE TABLE public.sala (
+                id_sala INTEGER NOT NULL DEFAULT nextval('public.sala_id_sala_seq_1_1'),
+                turma_pk VARCHAR NOT NULL,
+                nome_sala VARCHAR,
+                CONSTRAINT sala_pk PRIMARY KEY (id_sala)
+);
+
+
+ALTER SEQUENCE public.sala_id_sala_seq_1_1 OWNED BY public.sala.id_sala;
+
 CREATE SEQUENCE public.bloco_idbloco_seq_1;
 
 CREATE TABLE public.Bloco (
                 idBloco INTEGER NOT NULL DEFAULT nextval('public.bloco_idbloco_seq_1'),
-                turma_pk VARCHAR NOT NULL,
                 id_sala INTEGER NOT NULL,
                 nome VARCHAR NOT NULL,
-                CONSTRAINT idbloco_pk PRIMARY KEY (idBloco, turma_pk, id_sala)
+                CONSTRAINT idbloco_pk PRIMARY KEY (idBloco)
 );
 
 
@@ -80,25 +80,16 @@ CREATE TABLE public.Turma_disc (
                 cod_aluno INTEGER NOT NULL,
                 cod_prof INTEGER NOT NULL,
                 falta INTEGER,
-                media_final DOUBLE PRECISION,
-                bimestre_1º  DOUBLE PRECISION,
-                  bimestre_2º  DOUBLE PRECISION,
-              bimestre_3º  DOUBLE PRECISION,
-             bimestre_4º  DOUBLE PRECISION,
-              
-             
+                media_final REAL,
+                Bimestre_ REAL,
+                Bimestre__1 REAL,
+                Bimestre__2 REAL,
+                Bimestre__3 REAL,
                 CONSTRAINT tur_disc_pk PRIMARY KEY (idDisc, turma_pk, idpk, cod_aluno, cod_prof)
 );
 
 
 ALTER SEQUENCE public.turma_disc_idpk_seq OWNED BY public.Turma_disc.idpk;
-
-ALTER TABLE public.Bloco ADD CONSTRAINT sala_bloco_fk
-FOREIGN KEY (id_sala)
-REFERENCES public.sala (id_sala)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
 
 ALTER TABLE public.Turma_disc ADD CONSTRAINT profissional_turma_disc_fk
 FOREIGN KEY (cod_prof)
@@ -114,9 +105,16 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.Bloco ADD CONSTRAINT turma_bloco_fk
+ALTER TABLE public.sala ADD CONSTRAINT turma_sala_fk
 FOREIGN KEY (turma_pk)
 REFERENCES public.Turma (turma_pk)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Bloco ADD CONSTRAINT sala_bloco_fk
+FOREIGN KEY (id_sala)
+REFERENCES public.sala (id_sala)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
