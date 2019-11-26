@@ -6,8 +6,7 @@
 package Views;
 
 import Model.Conexao_bd;
-import static Views.Alunos.data1;
-import static Views.Alunos.rg1;
+
 
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -20,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.eclipse.persistence.internal.helper.JPAClassLoaderHolder;
+
 
 /**
  *
@@ -113,7 +113,7 @@ public class telainicial extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/200619122453_16.png"))); // NOI18N
-        jMenu2.setText("Professores");
+        jMenu2.setText("Profissionais");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -131,11 +131,10 @@ public class telainicial extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/korganizer_task_tasks_list_9501.png"))); // NOI18N
-        jMenu3.setText("Dados Escolar");
+        jMenu3.setText("Cadastro Escolar");
         jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        menu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SHIFT, java.awt.event.InputEvent.CTRL_MASK));
         menu.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/Student-id512_44205.png"))); // NOI18N
         menu.setText("Cadastramento");
@@ -207,19 +206,19 @@ public class telainicial extends javax.swing.JFrame {
           
             c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
             c.rs.first();
-            if(c.rs.getString("perfil").equals("Diretor")){
+            if(c.rs.getString("perfil").equals("Diretor(a)")){
                   
-                  a.jPanel10.setEnabled(true);
+                  a.jPanel2.setEnabled(true);
                  
                   
                   
               
             }else{
-                a.nome2.setEditable(false);
-         a.rg1.setEditable(false);
-         a.sobrenome1.setEditable(false);
-         a.data1.setEnabled(false);
-            a.jButton3.setEnabled(false);
+                a.nomegg.setEditable(false);
+         a.rgg.setEditable(false);
+         a.sex.setEditable(false);
+         a.rgg.setEnabled(false);
+         
            
                 JOptionPane.showMessageDialog(null, "Você não possui permissão para cadastrar alunos", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
@@ -239,9 +238,12 @@ public class telainicial extends javax.swing.JFrame {
           
             c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
             c.rs.first();
-            if(c.rs.getString("perfil").equals("Diretor")){
+            if(c.rs.getString("perfil").equals("Diretor(a)")){
                     Alunos a = new Alunos();
-                  a.jPanel10.setVisible(true);
+                  a.jPanel2.setVisible(true);
+                  new Escolar().setVisible(true);
+                 new Escolar().show();
+                 
               
             }else{
                 
