@@ -36,13 +36,15 @@ public class EscolarDao extends Conexao_bd {
             conecta();
             
       try {
-        PreparedStatement pst = conexao.prepareStatement("insert into turma(turma_pk,cod_aluno,turno) values(?,?,?,?)");
+        PreparedStatement pst = conexao.prepareStatement("insert into turma(turma_pk,turno) values(?,?)");
              pst.setString(1,tur.getTurma_tipo());
              
-             pst.setInt(2, tur.getAluno().getCod());
-             pst.setString(3, tur.getTurno());
+          
+             pst.setString(2, tur.getTurno());
                 
              pst.executeUpdate();
+               
+              JOptionPane.showMessageDialog(null, "cadastro com sucesso" );
              
         } catch (SQLException ex) {
             
@@ -56,12 +58,13 @@ public class EscolarDao extends Conexao_bd {
     public void InserirSala(Sala sala){
         conecta();
         try {
-      PreparedStatement pst= conexao.prepareStatement("insert into sala (id_sala,nome_sala) values(default,?)");
+      PreparedStatement pst= conexao.prepareStatement("insert into sala (id_sala,nome_sala,turma_pk) values(default,?,?)");
       
         pst.setString(1, sala.getNome_sala());
+        pst.setString(2, sala.getTurma().getTurma_tipo());
             pst.executeUpdate();
             
-            
+              JOptionPane.showMessageDialog(null, "cadastro com sucesso" );
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(null, "nao cadastrou" +ex);
@@ -77,16 +80,15 @@ public class EscolarDao extends Conexao_bd {
     public void InserirBloco(Bloco bloco){
         conecta();
           try {
-      PreparedStatement pst= conexao.prepareStatement("insert into bloco (id_bloco,turma_pk,cod_aluno,id_sala,nome ) values(default,?,?,?,?,?)");
+      PreparedStatement pst= conexao.prepareStatement("insert into bloco (idbloco,id_sala,nome ) values(default,?,?)");
       
-        pst.setString(1, bloco.getTurma().getTurma_tipo());
-       
-         pst.setInt(2, bloco.getAluno().getCod());
-         pst.setInt(3, bloco.getSala().getIdSala());
-         pst.setString(4, bloco.getNomeBloco());
+   
+         pst.setInt(1, bloco.getSala().getIdSala());
+         pst.setString(2, bloco.getNomeBloco());
                  
             pst.executeUpdate();
-            
+               
+            JOptionPane.showMessageDialog(null, "cadastro com sucesso");
             
         } catch (SQLException ex) {
             
@@ -108,7 +110,7 @@ public class EscolarDao extends Conexao_bd {
       
             pst.executeUpdate();
             
-            
+               JOptionPane.showMessageDialog(null, "cadastrou");
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(null, "nao cadastrou" +ex);
@@ -326,24 +328,21 @@ public class EscolarDao extends Conexao_bd {
         }
         
         
-       /*  public ArrayList<Disciplina> BuscarCodDisc(String registro){
+        public ArrayList<Sala> BuscarCodSala(String registro){
        conecta();
-            ArrayList<Disciplina> listaa1 = new ArrayList<>();
+            ArrayList<Sala> listaa1 = new ArrayList<>();
         try {
-            pst = conexao.prepareStatement("select iddisc from disicplina where nome_disc ilike'"+
+            pst = conexao.prepareStatement("select id_sala from sala where nome_sala ilike'"+
                     registro+ "%'");
             rs =pst.executeQuery();
             
             while(rs.next()){
 
-              RegistroAlunoModel a = new RegistroAlunoModel();
+              Sala a = new Sala();
               
-              AlunosModel b = new AlunosModel();
-             
-              
-              b.setCod(rs.getInt("cod_aluno"));
-                   a.setAluno(b);
-                   a.setCod(rs.getInt("idpk"));
+           
+    
+                   a.setIdSala(rs.getInt("id_sala"));
                     listaa1.add(a);
 
             }
@@ -359,7 +358,45 @@ public class EscolarDao extends Conexao_bd {
             
             
         }
+        
+           
+       /* public ArrayList<Turma> BuscarCodTurma(String registro){
+       conecta();
+            ArrayList<Turma> listaa1 = new ArrayList<>();
+        try {
+            pst = conexao.prepareStatement("select tumra_pk from turma where  turma_pk ilike'"+
+                    registro+ "%'");
+            rs =pst.executeQuery();
+            
+            while(rs.next()){
+
+                Turma t = new Turma();
+                 t.setTurma_tipo(rs.getString("turma_pk"));
+           
+    
+                    listaa1.add(t);
+
+            }
+            
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(EscolarDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return listaa1;
+            
+            
+            
+            
+        }
+        
+        
         */
+        
+        
+        
+        
+        
          
          public void InserirFaltas(RegistroAlunoModel reg, int id){
              conecta();
