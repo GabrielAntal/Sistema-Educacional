@@ -5,6 +5,13 @@
  */
 package Views;
 
+import Controller.EscolarDao;
+import Model.Bloco;
+import Model.Disciplina;
+import Model.Sala;
+import Model.Turma;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Willian
@@ -30,19 +37,17 @@ public class Escolar extends javax.swing.JFrame {
 
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        turmaescolar = new javax.swing.JTextField();
+        turnoescolar = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        disciplinaescolar = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
@@ -66,86 +71,122 @@ public class Escolar extends javax.swing.JFrame {
         setTitle("Dados Escolar");
         getContentPane().setLayout(null);
 
+        jTabbedPane4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jPanel1.setLayout(null);
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("limpar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(460, 140, 150, 30);
+        jPanel1.add(jButton3);
+        jButton3.setBounds(50, 350, 90, 50);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setText("Turma");
+
+        turmaescolar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turmaescolarActionPerformed(evt);
+            }
+        });
+
+        turnoescolar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnoescolarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Turno");
+
+        jButton5.setText("Salvar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addGap(14, 14, 14)
+                .addComponent(turmaescolar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(turnoescolar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(turmaescolar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(turnoescolar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel4);
+        jPanel4.setBounds(20, 20, 870, 140);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Disciplina");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(370, 140, 100, 30);
+        jLabel1.setBounds(60, 220, 100, 30);
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        disciplinaescolar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                disciplinaescolarActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(100, 70, 120, 30);
+        jPanel1.add(disciplinaescolar);
+        disciplinaescolar.setBounds(170, 220, 178, 30);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Sala");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(40, 70, 60, 30);
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Salvar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(680, 60, 140, 30);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Turno");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(40, 160, 60, 30);
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(399, Short.MAX_VALUE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(377, 377, 377))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
 
-        jButton3.setText("limpar");
-        jPanel1.add(jButton3);
-        jButton3.setBounds(260, 360, 90, 50);
+        jPanel1.add(jPanel6);
+        jPanel6.setBounds(20, 190, 870, 120);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Bloco");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(620, 60, 60, 30);
-
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField8);
-        jTextField8.setBounds(460, 60, 100, 30);
-
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField10);
-        jTextField10.setBounds(90, 160, 140, 30);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Turma");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(380, 60, 60, 30);
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(jPanel4);
-        jPanel4.setBounds(20, 20, 870, 250);
-
-        jButton5.setText("Salvar");
-        jPanel1.add(jButton5);
-        jButton5.setBounds(60, 360, 90, 50);
-
-        jTabbedPane4.addTab("Cadastrar sala, Turma e Disiciplina", jPanel1);
+        jTabbedPane4.addTab("Cadastro Escolar", jPanel1);
 
         jPanel2.setLayout(null);
 
@@ -167,13 +208,18 @@ public class Escolar extends javax.swing.JFrame {
         jTextField6.setBounds(580, 220, 140, 30);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Turma");
+        jLabel6.setText("Bloco");
         jPanel2.add(jLabel6);
         jLabel6.setBounds(520, 210, 60, 40);
 
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
+            }
+        });
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
             }
         });
         jPanel2.add(jTextField7);
@@ -193,15 +239,21 @@ public class Escolar extends javax.swing.JFrame {
                 jTextField9ActionPerformed(evt);
             }
         });
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField9KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField9);
         jTextField9.setBounds(80, 30, 150, 30);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Bloco");
+        jLabel10.setText("Turma");
         jPanel2.add(jLabel10);
         jLabel10.setBounds(30, 20, 50, 50);
 
-        jLabel11.setText("CODIGO");
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Turma");
         jPanel2.add(jLabel11);
         jLabel11.setBounds(330, 30, 80, 30);
 
@@ -221,6 +273,11 @@ public class Escolar extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField11.setEditable(false);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
@@ -234,23 +291,22 @@ public class Escolar extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(378, 378, 378)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(378, 378, 378)
+                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(413, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
 
         jPanel2.add(jPanel3);
@@ -259,50 +315,47 @@ public class Escolar extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(588, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(670, Short.MAX_VALUE))
+                .addGap(159, 159, 159))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         jPanel2.add(jPanel5);
         jPanel5.setBounds(10, 190, 860, 220);
 
-        jTabbedPane4.addTab("Cadastrar Disciplina", jPanel2);
+        jTabbedPane4.addTab("Cadastro de Salas e Bloco", jPanel2);
 
         getContentPane().add(jTabbedPane4);
-        jTabbedPane4.setBounds(0, 0, 910, 460);
+        jTabbedPane4.setBounds(0, 0, 900, 460);
 
         jButton4.setText("Cancelar");
         getContentPane().add(jButton4);
         jButton4.setBounds(650, 480, 90, 30);
 
-        setBounds(0, 0, 920, 563);
+        setBounds(0, 0, 932, 563);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void disciplinaescolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disciplinaescolarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_disciplinaescolarActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
@@ -320,13 +373,13 @@ public class Escolar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void turmaescolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turmaescolarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_turmaescolarActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void turnoescolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnoescolarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_turnoescolarActionPerformed
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
@@ -335,6 +388,137 @@ public class Escolar extends javax.swing.JFrame {
     private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField12ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       
+        String turno = turnoescolar.getText();
+    
+        String turma= turmaescolar.getText();
+        
+        EscolarDao e = new EscolarDao();
+  
+        if(turma.length()>0&&turno.length()>0){
+        Turma t = new Turma();
+        t.setTurma_tipo(turma);
+        t.setTurno(turno);
+        e.InserirTurma(t);
+       
+        turmaescolar.setText("");
+        turnoescolar.setText("");
+        
+        }else{
+            JOptionPane.showMessageDialog(null, "preencha os campos");
+        }
+        
+     
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+              String dis = disciplinaescolar.getText();
+                   EscolarDao e = new EscolarDao();
+        if(dis.length()>0){
+         Disciplina d = new Disciplina();
+         d.setNome(dis);
+         e.InserirDisicplina(d);
+          disciplinaescolar.setText("");
+    
+        
+        }else{
+             JOptionPane.showMessageDialog(null, "preencha os campos");
+        }
+         
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        disciplinaescolar.setText("");
+        turmaescolar.setText("");
+        turnoescolar.setText("");
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
+       EscolarDao e = new EscolarDao();
+       
+        String dis =jTextField9.getText();
+       
+       
+     
+     
+        if(dis.length()>0){
+          for(Turma d : e.BuscarCodTurma(dis)){
+                  jTextField11.setText(d.getTurma_tipo());
+                    
+          }}else{
+            jTextField11.setText(" ");
+        } // TODO ad
+        
+        
+    }//GEN-LAST:event_jTextField9KeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            EscolarDao e = new EscolarDao();
+            
+            String sala = jTextField12.getText();
+            Sala s = new Sala();
+            s.setNome_sala(sala);
+            
+            Turma t = new Turma();
+            t.setTurma_tipo(jTextField11.getText());
+            s.setTurma(t);
+            
+            e.InserirSala(s);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+           EscolarDao e = new EscolarDao();
+            String dis =jTextField7.getText();
+       
+       
+       
+     
+        if(dis.length()>0){
+          for(Sala d : e.BuscarCodSala(dis)){
+                 
+          jTextField5.setText(Integer.toString(d.getIdSala()));
+                    
+          }}else{
+            jTextField5.setText(" ");
+        } 
+        
+    }//GEN-LAST:event_jTextField7KeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            EscolarDao e = new EscolarDao();
+            String sala = jTextField7.getText();
+            int cod = Integer.parseInt(jTextField5.getText());
+            String bloco= jTextField6.getText();
+            
+            Sala s = new Sala();
+            s.setIdSala(cod);
+            
+            Bloco b = new Bloco();
+            b.setSala(s);
+            b.setNomeBloco(bloco);
+            if(sala.length()>0&&bloco.length()>0){
+            
+            e.InserirBloco(b);
+            }  else{
+                JOptionPane.showMessageDialog(null, "Preencha os campos");
+            }
+            
+            
+            
+            
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -372,18 +556,18 @@ public class Escolar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField disciplinaescolar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -393,17 +577,15 @@ public class Escolar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField turmaescolar;
+    private javax.swing.JTextField turnoescolar;
     // End of variables declaration//GEN-END:variables
 }
