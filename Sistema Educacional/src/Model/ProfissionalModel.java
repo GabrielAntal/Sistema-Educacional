@@ -18,7 +18,7 @@ public class ProfissionalModel {
     private String cpf;
     private String nome;
 
-    public ProfissionalModel(String login, String senha, String perfil, String cpf, String nome, int cod) {
+    public ProfissionalModel(int cod, String nome, String cpf, String login, String senha, String perfil) {
         this.login = login;
         this.senha = senha;
         this.perfil = perfil;
