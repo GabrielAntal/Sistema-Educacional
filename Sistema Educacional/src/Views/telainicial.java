@@ -6,7 +6,7 @@
 package Views;
 
 import Model.Conexao_bd;
-
+import Views.Alunos;
 
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.eclipse.persistence.internal.helper.JPAClassLoaderHolder;
-
 
 /**
  *
@@ -113,9 +112,14 @@ public class telainicial extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/200619122453_16.png"))); // NOI18N
-        jMenu2.setText("Profissionais");
+        jMenu2.setText("Professores");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -131,7 +135,7 @@ public class telainicial extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/imagens/korganizer_task_tasks_list_9501.png"))); // NOI18N
-        jMenu3.setText("Cadastro Escolar");
+        jMenu3.setText("Dados Escolar");
         jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -192,6 +196,22 @@ public class telainicial extends javax.swing.JFrame {
         p.setVisible(true);
         
         
+        try {
+            c.conecta();
+          
+            c.executaSql("select perfil from profissional where login ='"+labelusu.getText()+"'");
+            c.rs.first();
+            if((c.rs.getString("perfil").equals("Professor(a)"))){
+                JOptionPane.showMessageDialog(null, "Você não possui permissão para acessar", "Aviso", JOptionPane.ERROR_MESSAGE);
+                p.dispose();
+                }
+            
+            
+        } catch (SQLException e) {
+            Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, e);
+        }
+        c.desconecta();
+        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -204,23 +224,92 @@ public class telainicial extends javax.swing.JFrame {
           try {
             c.conecta();
           
-            c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
+            c.executaSql("select perfil from profissional where login ='"+labelusu.getText()+"'");
             c.rs.first();
             if(c.rs.getString("perfil").equals("Diretor(a)")){
                   
-                  a.jPanel2.setEnabled(true);
+                 a.jPanel10.setEnabled(true);
+            }else{
+            
+                if((c.rs.getString("perfil").equals("Professor(a)"))){
+               
+                //Criação de aluno
+                a.rgg.setEnabled(false);
+                a.nomegg.setEnabled(false);
+                a.sobrenomegg.setEnabled(false);
+                a.datagg.setEnabled(false);
+                a.sex.setEnabled(false);
+                a.jButton5.setEnabled(false);
+                a.jTable1.setEnabled(false);
+                
+                //Alterações
+                a.busca.setEnabled(false);
+                a.rgt.setEnabled(false);
+                
+                //Matricula
+                a.rgmatri.setEnabled(false);
+                a.dis.setEnabled(false);
+                a.tur.setEnabled(false);
+                a.jTextField57.setEnabled(false);
+                a.jButton2.setEnabled(false);
+                a.jButton3.setEnabled(false);
+                a.jButton1.setEnabled(false);
+                
+                
+                
+                
+                        
+                       
+                    }else{
+                         if((c.rs.getString("perfil").equals("Secretário(a)"))){
+                            //Lançar freq
+                            a.alteraaluno.setEnabled(false);
+                            a.codalu.setEnabled(false);
+                            a.jButton9.setEnabled(false);
+                            a.codmatri.setEnabled(false);
+                            a.jButton10.setEnabled(false);
+                            a.jTextField17.setEnabled(false);
+                
+                
+                
+                            //Lançar Notas a..setEnabled(false);
+                            a.discnota.setEnabled(false);
+                            a.jButton12.setEnabled(false);
+                            a.jTextField56.setEnabled(false);
+                            a.jTextField59.setEnabled(false);
+                            a.jTextField61.setEnabled(false);
+                            a.jTextField60.setEnabled(false);
+                            a.jButton11.setEnabled(false);
+                            a.jButton13.setEnabled(false);
+                            a.jTextField32.setEnabled(false);
+                            a.nota1.setEnabled(false);
+                            a.nota2.setEnabled(false);
+                            a.nota3.setEnabled(false);
+                            a.nota4.setEnabled(false);
+                            a.media.setEnabled(false);
+                
+                            //Alterações
+                            a.busca.setEnabled(false);
+                            a.rgt.setEnabled(false);
+                            a.jTextField16.setEnabled(false);
+                            
+                            
+                            //Medias
+                            a.jTextField22.setEnabled(false);
+                            a.jButton15.setEnabled(false);
+                            a.jTextPane1.setEnabled(false);
+                            a.jButton14.setEnabled(false);
+                            
+                }
+           
+                
+            }
                  
                   
                   
               
-            }else{
-                a.nomegg.setEditable(false);
-         a.rgg.setEditable(false);
-         a.sex.setEditable(false);
-         a.rgg.setEnabled(false);
-         
-           
-                JOptionPane.showMessageDialog(null, "Você não possui permissão para cadastrar alunos", "Aviso", JOptionPane.ERROR_MESSAGE);
+            
+               
             }
         } catch (SQLException ex) {
             Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, ex);
@@ -233,28 +322,30 @@ public class telainicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
+        Professores p = new Professores();
+        p.setVisible(true);
+        
+        
         try {
             c.conecta();
           
-            c.executaSql("select* from profissional where perfil ='"+labelusu.getText()+"'");
+            c.executaSql("select perfil from profissional where login ='"+labelusu.getText()+"'");
             c.rs.first();
-            if(c.rs.getString("perfil").equals("Diretor(a)")){
-                    Alunos a = new Alunos();
-                  a.jPanel2.setVisible(true);
-                  new Escolar().setVisible(true);
-                 new Escolar().show();
-                 
-              
-            }else{
-                
-           
-                JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para acessar");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, ex);
+            if((c.rs.getString("perfil").equals("Professor(a)"))){
+                JOptionPane.showMessageDialog(null, "Você não possui permissão para acessar", "Aviso", JOptionPane.ERROR_MESSAGE);
+                p.dispose();
+                }
+            
+            
+        } catch (SQLException e) {
+            Logger.getLogger(telainicial.class.getName()).log(Level.SEVERE, null, e);
         }
         c.desconecta();
     }//GEN-LAST:event_menuActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2ActionPerformed
 
     /**
      * @param args the command line arguments

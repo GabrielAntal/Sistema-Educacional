@@ -859,6 +859,12 @@ public class Alunos extends javax.swing.JFrame {
         });
         jPanel6.add(nota3);
         nota3.setBounds(410, 50, 80, 30);
+
+        jTextField32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField32ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jTextField32);
         jTextField32.setBounds(10, 50, 110, 30);
         jPanel6.add(jTextField33);
@@ -1128,6 +1134,12 @@ public class Alunos extends javax.swing.JFrame {
         jTabbedPane1.addTab("Lançar Notas", jPanel5);
 
         jPanel9.setLayout(null);
+
+        jTextField22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField22ActionPerformed(evt);
+            }
+        });
         jPanel9.add(jTextField22);
         jTextField22.setBounds(70, 30, 200, 30);
 
@@ -1983,6 +1995,14 @@ public class Alunos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField22ActionPerformed
+
+    private void jTextField32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField32ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField32ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2019,32 +2039,32 @@ public class Alunos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField alteraaluno;
-    private javax.swing.JButton busca;
+    public javax.swing.JTextField alteraaluno;
+    public javax.swing.JButton busca;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JTextField codalu;
-    private javax.swing.JTextField codmatri;
+    public javax.swing.JTextField codalu;
+    public javax.swing.JTextField codmatri;
     private javax.swing.JTextField dat;
     public javax.swing.JFormattedTextField datagg;
     private javax.swing.JTextField datamatri;
-    private javax.swing.JTextField dis;
-    private javax.swing.JTextField discnota;
+    public javax.swing.JTextField dis;
+    public javax.swing.JTextField discnota;
     private javax.swing.JButton edit;
     private javax.swing.JButton excluir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton10;
+    public javax.swing.JButton jButton11;
+    public javax.swing.JButton jButton12;
+    public javax.swing.JButton jButton13;
+    public javax.swing.JButton jButton14;
+    public javax.swing.JButton jButton15;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     public javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton9;
+    public javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2093,7 +2113,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
+    public javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -2129,21 +2149,21 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
+    public javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
+    public javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
+    public javax.swing.JTextField jTextField16;
+    public javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
+    public javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField27;
     private javax.swing.JTextField jTextField28;
-    private javax.swing.JTextField jTextField32;
+    public javax.swing.JTextField jTextField32;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField35;
     private javax.swing.JTextField jTextField36;
@@ -2165,32 +2185,32 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField52;
     private javax.swing.JTextField jTextField53;
     private javax.swing.JTextField jTextField54;
-    private javax.swing.JTextField jTextField56;
-    private javax.swing.JTextField jTextField57;
+    public javax.swing.JTextField jTextField56;
+    public javax.swing.JTextField jTextField57;
     private javax.swing.JTextField jTextField58;
-    private javax.swing.JTextField jTextField59;
-    private javax.swing.JTextField jTextField60;
-    private javax.swing.JTextField jTextField61;
-    private javax.swing.JTextPane jTextPane1;
+    public javax.swing.JTextField jTextField59;
+    public javax.swing.JTextField jTextField60;
+    public javax.swing.JTextField jTextField61;
+    public javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton limpa;
-    private javax.swing.JTextField media;
+    public javax.swing.JTextField media;
     private javax.swing.JTextField nom1;
     public javax.swing.JTextField nomegg;
     private javax.swing.JTextField nomematri;
-    private javax.swing.JTextField nota1;
-    private javax.swing.JTextField nota2;
-    private javax.swing.JTextField nota3;
-    private javax.swing.JTextField nota4;
+    public javax.swing.JTextField nota1;
+    public javax.swing.JTextField nota2;
+    public javax.swing.JTextField nota3;
+    public javax.swing.JTextField nota4;
     public javax.swing.JTextField rg3;
     public javax.swing.JFormattedTextField rgg;
-    private javax.swing.JFormattedTextField rgmatri;
-    private javax.swing.JFormattedTextField rgt;
+    public javax.swing.JFormattedTextField rgmatri;
+    public javax.swing.JFormattedTextField rgt;
     private javax.swing.JButton salvar1;
     public javax.swing.JTextField sex;
     private javax.swing.JTextField sexomatri;
     private javax.swing.JTextField sobrematri;
     private javax.swing.JTextField sobrenome2;
     public javax.swing.JTextField sobrenomegg;
-    private javax.swing.JTextField tur;
+    public javax.swing.JTextField tur;
     // End of variables declaration//GEN-END:variables
 }

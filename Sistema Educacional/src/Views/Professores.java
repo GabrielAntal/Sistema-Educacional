@@ -9,7 +9,7 @@ package Views;
 import javax.swing.JOptionPane;
 import Controller.ProfissionalDao;
 import Model.Conexao_bd;
-import Model.ProfessorModel;
+import Model.ProfissionalModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +27,8 @@ import javax.swing.table.DefaultTableModel;
 public class Professores extends javax.swing.JFrame {
   Conexao_bd c = new Conexao_bd();
    PreparedStatement pst;
-  ProfessorModel prof;
+  ProfissionalModel prof;
+    private int cod;
     private String cpf;
     private String nome;
     private String login;
@@ -38,7 +39,7 @@ public class Professores extends javax.swing.JFrame {
     
     
     public Professores() {
-        this.prof = new ProfessorModel(nome, cpf, login, senha, perfil);
+        this.prof = new ProfissionalModel(cod, nome, cpf, login, senha, perfil);
       
         initComponents();
         setLocationRelativeTo(null);
@@ -74,7 +75,7 @@ public class Professores extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4);
             
             
-            for( ProfessorModel p : profissional.mostrar_prof(list) ){
+            for( ProfissionalModel p : profissional.mostrar_prof(list) ){
                 tabela.addRow(new Object[]{
                     p.getNome(),
                     p.getCpf(),
@@ -95,7 +96,7 @@ public class Professores extends javax.swing.JFrame {
             jTextField4.setText("");
             jTextField6.setText("");
             jTextField9.setText("");
-    
+            jFormattedTextField1.setText("");    
     
     }
     
@@ -581,6 +582,7 @@ public class Professores extends javax.swing.JFrame {
         ProfissionalDao p = new ProfissionalDao();
         if(name.length()>0&& fpc.length()>0&& log.length()>0 && password.length()>0){
             p.Inserir_Profissional(prof);
+            limpar_campos();
 
         }else{
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
@@ -588,7 +590,7 @@ public class Professores extends javax.swing.JFrame {
         
         Tab();
         
-        limpar_campos();
+        
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -643,7 +645,7 @@ public class Professores extends javax.swing.JFrame {
        String senha = SenhaAlt.getText();
        String perfil = ((String) jComboBox2.getSelectedItem());
        
-       ProfessorModel prof = new ProfessorModel(nome, cpf, login, senha, perfil);
+       ProfissionalModel prof = new ProfissionalModel(cod, nome, cpf, login, senha, perfil);
        
        profissional.Atualizar_Profissional(prof);
        NomeAlt.setText("");

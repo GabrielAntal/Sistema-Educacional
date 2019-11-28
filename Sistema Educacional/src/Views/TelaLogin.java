@@ -25,10 +25,14 @@ public class TelaLogin extends javax.swing.JFrame {
    PreparedStatement pst = null;
    ResultSet rs = null;
    
-   
+  
     /**
      * Creates new form TelaLogin
      */
+   
+   
+   
+   
     public TelaLogin() {
         initComponents();
         setLocationRelativeTo(null);
