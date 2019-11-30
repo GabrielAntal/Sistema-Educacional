@@ -13,10 +13,19 @@ public class Sala {
     
     private int idSala;
     private String nome_sala;
+    private Turma turma;
 
-    public Sala(int idSala, String nome_sala) {
+    public Sala(int idSala, String nome_sala, Turma turma) {
         this.idSala = idSala;
         this.nome_sala = nome_sala;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     public Sala() {

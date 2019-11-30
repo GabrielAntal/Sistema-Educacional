@@ -14,22 +14,16 @@ public class Turma {
     private String turno;
     private String Turma_tipo;
     private AlunosModel aluno;
-    private matricula mat;
+ 
 
-    public Turma(String turno, String Turma_tipo, AlunosModel aluno, matricula mat) {
+    public Turma(String turno, String Turma_tipo, AlunosModel aluno) {
         this.turno = turno;
         this.Turma_tipo = Turma_tipo;
         this.aluno = aluno;
-        this.mat =mat;
+       
     }
 
-    public matricula getMat() {
-        return mat;
-    }
-
-    public void setMat(matricula mat) {
-        this.mat = mat;
-    }
+    
 
     public Turma() {
     }
