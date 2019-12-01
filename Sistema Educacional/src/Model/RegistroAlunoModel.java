@@ -17,6 +17,7 @@ public class RegistroAlunoModel {
     private Turma turma;
     private AlunosModel aluno;
     private ProfissionalModel prof;
+    private AlunosModel nome;
     
     private int cod;
     private int falta;
@@ -57,6 +58,14 @@ public class RegistroAlunoModel {
 
     public int getCod() {
         return cod;
+    }
+
+    public AlunosModel getNome() {
+        return nome;
+    }
+
+    public void setNome(AlunosModel nome) {
+        this.nome = nome;
     }
 
     public void setCod(int cod) {
