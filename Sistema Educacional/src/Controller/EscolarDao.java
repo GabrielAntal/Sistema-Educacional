@@ -421,7 +421,7 @@ public class EscolarDao extends Conexao_bd {
         public  void InserirNotas(RegistroAlunoModel reg, int id){
             conecta();
             try {
-               pst = conexao.prepareStatement("update turma_disc set bimestre_1º =?,  bimestre_2º=?, bimestre_3º=? , bimestre_4º=?, media_final=? where idpk ='"+id+"'" );
+       pst = conexao.prepareStatement("update turma_disc set bimestre_1º =?,  bimestre_2º=?, bimestre_3º=? , bimestre_4º=?, media_final=? where idpk ='"+id+"'" );
               
                 pst.setFloat(1, reg.getNota1());
           
@@ -431,7 +431,7 @@ public class EscolarDao extends Conexao_bd {
                     pst.setFloat(5, reg.getMediafinal());
                 pst.executeUpdate();
                 pst.close();
-                     JOptionPane.showMessageDialog(null,"Alterado com sucesso" );
+                     JOptionPane.showMessageDialog(null,"cadastro nota com  sucesso" );
                 desconecta();
             } catch (SQLException e) {
                 
@@ -455,9 +455,46 @@ public class EscolarDao extends Conexao_bd {
                     JOptionPane.showMessageDialog(null, "Erro ");
                     return null;
                 }    
+        }
+            
+            
+         
+         public ArrayList<RegistroAlunoModel> Buscar(String reg){
+       conecta();
+            ArrayList<RegistroAlunoModel> listaa1= new ArrayList<>();
+        try {
+            pst = conexao.prepareStatement("select  cod_aluno, idpk, nome_aluno from aluno natural join turma_disc where rg_aluno ilike'"+
+                    reg+ "%'");
+            rs =pst.executeQuery();
+            
+            while(rs.next()){
+
+              RegistroAlunoModel a = new RegistroAlunoModel();
+              
+              AlunosModel b = new AlunosModel();
+             
+              
+              b.setCod(rs.getInt("cod_aluno"));
+                   b.setNome(rs.getString("nome_aluno"));
+                   a.setAluno(b);
+                   a.setNome(b);
+                   
+                   a.setCod(rs.getInt("idpk"));
+                    listaa1.add(a);
+
+            }
             
             
             
+            } catch (SQLException ex) {
+            Logger.getLogger(EscolarDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return listaa1;
+            
+            
+            
+            
+        }
         
         
         
@@ -465,7 +502,11 @@ public class EscolarDao extends Conexao_bd {
         
         
     
-        }
+        
+            
+            
+            
+            
         
     }
     
