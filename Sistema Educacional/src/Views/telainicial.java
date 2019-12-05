@@ -275,10 +275,10 @@ public class telainicial extends javax.swing.JFrame {
                             //Lançar Notas a..setEnabled(false);
                             a.discnota.setEnabled(false);
                             a.jButton12.setEnabled(false);
-                            a.jTextField56.setEnabled(false);
-                            a.jTextField59.setEnabled(false);
-                            a.jTextField61.setEnabled(false);
-                            a.jTextField60.setEnabled(false);
+                            // a.jTextField56.setEnabled(false);
+                           // a.jTextField59.setEnabled(false);
+                           // a.jTextField61.setEnabled(false);
+                           // a.jTextField60.setEnabled(false);
                             a.jButton11.setEnabled(false);
                             a.jButton13.setEnabled(false);
                             a.jTextField32.setEnabled(false);
