@@ -317,8 +317,12 @@ public class Alunos extends javax.swing.JFrame {
         jLabel51 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jTextField22 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jButton14 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         jLabel37 = new javax.swing.JLabel();
         jSeparator12 = new javax.swing.JSeparator();
         jButton15 = new javax.swing.JButton();
@@ -1130,6 +1134,11 @@ public class Alunos extends javax.swing.JFrame {
         jPanel9.add(jTextField22);
         jTextField22.setBounds(70, 30, 200, 30);
 
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setText("Observações");
+        jPanel9.add(jLabel27);
+        jLabel27.setBounds(40, 320, 130, 20);
+
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1163,6 +1172,15 @@ public class Alunos extends javax.swing.JFrame {
 
         jPanel9.add(jScrollPane4);
         jScrollPane4.setBounds(30, 90, 650, 190);
+
+        jButton14.setText("Salvar");
+        jPanel9.add(jButton14);
+        jButton14.setBounds(510, 443, 80, 30);
+
+        jScrollPane5.setViewportView(jTextPane1);
+
+        jPanel9.add(jScrollPane5);
+        jScrollPane5.setBounds(30, 360, 450, 120);
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel37.setText("RG");
@@ -1799,8 +1817,12 @@ public class Alunos extends javax.swing.JFrame {
       
     
     EscolarDao u = new EscolarDao();
+    
+    if(dis.getText().length()>0 && tur.getText().length()>0 && jTextField57.getText().length()>0){
     u.InserirResgistro(r);
-      
+    }else {
+        JOptionPane.showMessageDialog(null, "insira os dados nos campos");
+    }
         
         
         
@@ -1839,12 +1861,14 @@ public class Alunos extends javax.swing.JFrame {
       reg.setNota4(notaa4);
       reg.setMediafinal(mediaa);
 
-     
+       if(jTextField32.getText().length()>0&&rggg.getText().length()>0){
       
       
       e.InserirNotas(reg, codRegistro);
         
-        
+       }else{
+           JOptionPane.showMessageDialog(null, "insira todos os campos");
+       }
         
         
         
@@ -1963,7 +1987,12 @@ public class Alunos extends javax.swing.JFrame {
        EscolarDao e = new EscolarDao();
        RegistroAlunoModel r = new RegistroAlunoModel();
        r.setFalta(falta);
+        if(jTextField17.getText().length()>0){
+       
        e.InserirFaltas(r, codRegistro);
+        }else{
+            JOptionPane.showMessageDialog(null, "insira o número de faltas");
+        }
        
        
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -2018,32 +2047,33 @@ public class Alunos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField alteraaluno;
+    private javax.swing.JTextField alteraaluno;
     private javax.swing.JLabel alunolabel;
-    public javax.swing.JButton busca;
+    private javax.swing.JButton busca;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    public javax.swing.JTextField codalu;
-    public javax.swing.JTextField codmatri;
+    private javax.swing.JTextField codalu;
+    private javax.swing.JTextField codmatri;
     private javax.swing.JTextField dat;
     public javax.swing.JFormattedTextField datagg;
     private javax.swing.JTextField datamatri;
-    public javax.swing.JTextField dis;
-    public javax.swing.JTextField discnota;
+    private javax.swing.JTextField dis;
+    private javax.swing.JTextField discnota;
     private javax.swing.JButton edit;
     private javax.swing.JButton excluir;
-    public javax.swing.JButton jButton1;
-    public javax.swing.JButton jButton10;
-    public javax.swing.JButton jButton11;
-    public javax.swing.JButton jButton12;
-    public javax.swing.JButton jButton13;
-    public javax.swing.JButton jButton15;
-    public javax.swing.JButton jButton2;
-    public javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     public javax.swing.JButton jButton5;
-    public javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton9;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2062,6 +2092,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -2093,7 +2124,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -2111,6 +2142,7 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
@@ -2126,22 +2158,22 @@ public class Alunos extends javax.swing.JFrame {
     public javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    public javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField16;
-    public javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
-    public javax.swing.JTextField jTextField22;
+    private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField27;
     private javax.swing.JTextField jTextField28;
-    public javax.swing.JTextField jTextField32;
+    private javax.swing.JTextField jTextField32;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField35;
     private javax.swing.JTextField jTextField36;
@@ -2163,31 +2195,32 @@ public class Alunos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField52;
     private javax.swing.JTextField jTextField53;
     private javax.swing.JTextField jTextField54;
-    public javax.swing.JTextField jTextField57;
+    private javax.swing.JTextField jTextField57;
     private javax.swing.JTextField jTextField58;
     private javax.swing.JTextField jTextField59;
     private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField61;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton limpa;
-    public javax.swing.JTextField media;
+    private javax.swing.JTextField media;
     private javax.swing.JTextField nom1;
     public javax.swing.JTextField nomegg;
     private javax.swing.JTextField nomematri;
-    public javax.swing.JTextField nota1;
-    public javax.swing.JTextField nota2;
-    public javax.swing.JTextField nota3;
-    public javax.swing.JTextField nota4;
+    private javax.swing.JTextField nota1;
+    private javax.swing.JTextField nota2;
+    private javax.swing.JTextField nota3;
+    private javax.swing.JTextField nota4;
     public javax.swing.JTextField rg3;
     public javax.swing.JFormattedTextField rgg;
-    public javax.swing.JFormattedTextField rggg;
-    public javax.swing.JFormattedTextField rgmatri;
-    public javax.swing.JFormattedTextField rgt;
+    private javax.swing.JFormattedTextField rggg;
+    private javax.swing.JFormattedTextField rgmatri;
+    private javax.swing.JFormattedTextField rgt;
     private javax.swing.JButton salvar1;
     public javax.swing.JTextField sex;
     private javax.swing.JTextField sexomatri;
     private javax.swing.JTextField sobrematri;
     private javax.swing.JTextField sobrenome2;
     public javax.swing.JTextField sobrenomegg;
-    public javax.swing.JTextField tur;
+    private javax.swing.JTextField tur;
     // End of variables declaration//GEN-END:variables
 }
