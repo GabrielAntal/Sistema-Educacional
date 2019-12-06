@@ -1817,8 +1817,12 @@ public class Alunos extends javax.swing.JFrame {
       
     
     EscolarDao u = new EscolarDao();
+    
+    if(dis.getText().length()>0 && tur.getText().length()>0 && jTextField57.getText().length()>0){
     u.InserirResgistro(r);
-      
+    }else {
+        JOptionPane.showMessageDialog(null, "insira os dados nos campos");
+    }
         
         
         
@@ -1857,12 +1861,14 @@ public class Alunos extends javax.swing.JFrame {
       reg.setNota4(notaa4);
       reg.setMediafinal(mediaa);
 
-     
+       if(jTextField32.getText().length()>0&&rggg.getText().length()>0){
       
       
       e.InserirNotas(reg, codRegistro);
         
-        
+       }else{
+           JOptionPane.showMessageDialog(null, "insira todos os campos");
+       }
         
         
         
@@ -1981,7 +1987,12 @@ public class Alunos extends javax.swing.JFrame {
        EscolarDao e = new EscolarDao();
        RegistroAlunoModel r = new RegistroAlunoModel();
        r.setFalta(falta);
+        if(jTextField17.getText().length()>0){
+       
        e.InserirFaltas(r, codRegistro);
+        }else{
+            JOptionPane.showMessageDialog(null, "insira o número de faltas");
+        }
        
        
     }//GEN-LAST:event_jButton10ActionPerformed
